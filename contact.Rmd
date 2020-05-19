@@ -1,0 +1,9 @@
+<link rel="stylesheet" href="styles.css" type="text/css">
+
+I’d love to hear from you, so feel free to reach out:
+
+Werftstr 2, 10557 Berlin \
++33684150906 \
+quennessonleo@gmail.com
+
+Or connect with me on GitHub or Linkedin (links in top right).

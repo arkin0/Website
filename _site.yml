@@ -16,3 +16,8 @@ output:
   html_document:
     theme: paper
     css: 'styles.css'
+    toc : true
+    toc_float:
+      collapsed: true
+      smooth_scroll: true
+      number_sections: true

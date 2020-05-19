@@ -9,10 +9,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Emily C. Zabor" />
 
 
-<title>Creating websites in R</title>
+<title>contact.utf8</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -20,9 +19,6 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -255,69 +251,6 @@ $(document).ready(function () {
 
 
 
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
-</style>
-
-
 
 </head>
 
@@ -325,16 +258,6 @@ div.tocify {
 
 
 <div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -383,75 +306,19 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Creating websites in R</h1>
-<h4 class="author">Emily C. Zabor</h4>
 
 </div>
 
 
 <p><link rel="stylesheet" href="styles.css" type="text/css"></p>
-<p>This tutorial provides an introduction to creating websites using R, R Markdown and GitHub pages.</p>
-<p>This tutorial was originally presented at the Memorial Sloan Kettering Cancer Center Department of Epidemiology and Biostatistics R User Group meeting on January 23, 2018.</p>
-<p>The current version was updated and presented at the R Ladies NYC Meetup on February 15, 2018.</p>
-<div id="types-of-websites" class="section level2">
-<h2>Types of websites</h2>
-<p>The main types of websites you may want to create include:</p>
-<ol style="list-style-type: decimal">
-<li>Personal websites</li>
-<li>Package websites</li>
-<li>Project websites</li>
-<li>Blogs</li>
-</ol>
-</div>
-<div id="r-markdown-website-basics" class="section level2">
-<h2>R Markdown website basics</h2>
-<p>The minimum requirements for an R Markdown website are:</p>
-<ul>
-<li><code>index.Rmd</code>: contains the content for the website homepage</li>
-<li><code>_site.yml</code>: contains metadata for the website</li>
-</ul>
-<p>A basic example of a <code>_site.yml</code> file for a website with two pages:</p>
-<pre class="r"><code>name: &quot;my-website&quot;
-navbar:
-  title: &quot;My Website&quot;
-  left:
-    - text: &quot;Home&quot;
-      href: index.html
-    - text: &quot;About&quot;
-      href: about.html</code></pre>
-<p>And a basic <code>index.Rmd</code> to create the Home page:</p>
-<pre class="r"><code>---
-title: &quot;My Website&quot;
----
-    
-Hello, Website! Welcome to the world.</code></pre>
-<p>You can find an overview of R Markdown website basics <a href="http://rmarkdown.rstudio.com/rmarkdown_websites.html">here</a>.</p>
-</div>
-<div id="personal-websites" class="section level2">
-<h2>Personal websites</h2>
-<p>An example from the homepage of <a href="http://www.emilyzabor.com/">my personal website</a>:</p>
-<p><img src="img/personal.png" style="border: #A9A9A9 1px solid; width:75%"></p>
-<p>There are two main steps for creating a personal website that will be hosted on GitHub:</p>
-<ol style="list-style-type: decimal">
-<li>GitHub setup</li>
-<li>Local setup</li>
-</ol>
-<div id="github-setup" class="section level3">
-<h3>GitHub setup</h3>
-<ol style="list-style-type: decimal">
-<li>Create a GitHub repository (“repo”) named YOUR_GH_NAME.github.io, where YOUR_GH_NAME is your GitHub username.</li>
-<li>Initialize it with a README
-<ul>
-<li>For the GitHub inexperienced: this can ease the process of cloning the repo by initializing the remote repo with a master branch</li>
-</ul></li>
-</ol>
-</div>
-</div>
+<p>I’d love to hear from you, so feel free to reach out:</p>
+<p>Werftstr 2, 10557 Berlin<br />
++33684150906<br />
+<a href="mailto:quennessonleo@gmail.com" class="email">quennessonleo@gmail.com</a></p>
+<p>Or connect with me on GitHub or Linkedin (links in top right).</p>
 
 
 
-</div>
-</div>
 
 </div>
 
@@ -484,32 +351,6 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
