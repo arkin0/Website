@@ -1,0 +1,18 @@
+name: "Léo Quennesson"
+output_dir: "."
+navbar:
+  title: "Léo Quennesson"
+  left:
+    - text: "Présentation"
+      href: Presentation.html
+  right:
+    - icon: fa-envelope fa-lg
+      href: contact.html
+    - icon: fa-github fa-lg
+      href: https://github.com/arkin0
+    - icon: fa-linkedin fa-lg
+      href: https://www.linkedin.com/in/l%C3%A9o-quennesson-920658b7/
+output:
+  html_document:
+    theme: paper
+    css: 'styles.css'
