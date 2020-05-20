@@ -1,6 +1,30 @@
-<link rel="stylesheet" href="styles.css" type="text/css">
+---
+title: "Un truc"
+author: "Léo Quennesson"
+output: 
+    html_document:
+        toc: FALSE
+        toc_float: FALSE
+---
+
 
 <img src="png/profil.jpg" style="width:25%; border:10px solid; margin-right: 20px" align="left">
 Un poil idéaliste, je pense que le rôle de l'économiste est d'améliorer la société.
 
 C'est avec cette idée que je me suis orienté vers l'évaluation des politiques publiques après une formation quantitative à la Paris School of Economics. Stagiaire à la Direction de la Sécurité Sociale, puis à la Direction de la Législation Fiscale, je me suis familiarisé avec les problématiques et le fonctionnement de ces directions. Mon premier poste comme chargé d’étude sur la dépense publique (et notamment locale) à la Direction Générale du Trésor (SPP-FIPU3) s'inscrit dans cette continuité. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
