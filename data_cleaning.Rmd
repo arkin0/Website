@@ -1,0 +1,49 @@
+---
+title: "Data Cleaning"
+output: 
+  html_document:
+        toc: TRUE
+        toc_float: TRUE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Source 
+
+You can find the excellent article of Shilpa Arora here <https://towardsdatascience.com/dirty-data-quality-assessment-cleaning-measures-39efb90ad734>. This guide is just a summary of it.
+
+
+## Priority of check 
+three levels:
+Level 1: Generic DQ metrics that should be checked irrespective of the type of dataset type or the use case. Few example:
+-Data Type/Schema
+-Missing values
+-Unique Primary key
+-Outliers
+-Negative values, etc.
+-Read more detailed Level 1 DQ metrics here.
+
+Level 2: Contextual checks which vary across different datasets and use cases. For example:
+-Column Relationship- Columns should follow their expected relation like, population column value cannot be less than household column value in the census data file.
+-Contextual data range- Based on context of the data, test for expected values or range of the values like, if data is from 2014 & onwards then date can’t be before 2013.
+
+Level 3: Comparative checks where we compare the data table with an ideal or master data table.
+-Master match/Entity Resolution- Check entities like geographic names, product names, email domains etc. against standard master files to weed out bad names and replace them with correct ones.
+
+
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
