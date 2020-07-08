@@ -1,11 +1,17 @@
 ---
 title: "Creating websites in R"
-author: "Léo Quennesson"
 output: 
     html_document:
         toc: TRUE
         toc_float: TRUE
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r klippy, echo=FALSE, include=TRUE}
+klippy::klippy(position = c('top', 'right'))
+```
 
 This tutorial provides an introduction to creating websites using R, R Markdown and GitHub pages. 
 
@@ -58,23 +64,6 @@ Hello, Website! Welcome to the world.
 
 You can find an overview of R Markdown website basics [here](http://rmarkdown.rstudio.com/rmarkdown_websites.html).
 
-## Personal websites
-
-An example from the homepage of  [my personal website](http://www.emilyzabor.com/):
-
-<img src="img/personal.png" style="border: #A9A9A9 1px solid; width:75%">
-
-
-There are two main steps for creating a personal website that will be hosted on GitHub:
-
-1. GitHub setup
-2. Local setup
-
-### GitHub setup
-
-1. Create a GitHub repository ("repo") named YOUR_GH_NAME.github.io, where YOUR_GH_NAME is your GitHub username.
-2. Initialize it with a README 
-    - For the GitHub inexperienced: this can ease the process of cloning the repo by initializing the remote repo with a master branch
 
 
 

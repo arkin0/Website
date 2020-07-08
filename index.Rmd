@@ -1,5 +1,5 @@
 ---
-title: "Un truc"
+title: "Presentation"
 author: "Léo Quennesson"
 output: 
     html_document:

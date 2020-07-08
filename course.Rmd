@@ -1,0 +1,671 @@
+---
+title: "Course"
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+  pdf_document:
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r klippy, echo=FALSE, include=TRUE}
+klippy::klippy(position = c('top', 'right'))
+```
+
+# Introduction and basics
+
+You can find here pratical examples found in *Introductory Econometrics: A Modern Approach, 6e by Jeffrey M. Wooldridge* and *Applied Econometrics with R of Kleiber C, Zeileis A (2008)*. 
+
+
+
+<img src="png/woolridge.jpg" width=35% >
+<img src="png/AER.jpg" width=35% >
+
+The wooldridge and AER packages allow you to load all the databases you need to illustrate those models.
+
+
+```{r ,eval=FALSE, echo=T}
+install.packages(c("wooldridge","AER"))
+```
+```{r, eval=TRUE,echo=TRUE,message=FALSE}
+library(wooldridge)
+library(AER)
+```
+
+
+# Linear Regression
+
+## Demand for economic journals : a simple Linear Regression 
+
+Data set from Stock & Watson (2007), originally collected by T. Bergstrom, on subscriptions to 180 economics journals at US libraries, for the year 2000.
+Bergstrom (2001) argues that commercial publishers are charging excessive prices for academic journals and also suggests ways that economists can deal with this problem. See http://www.econ.ucsb.edu/~tedb/Journals/jpricing.html
+
+### Description 
+```{r,  echo=T}
+data("Journals", package = "AER")
+journals <- Journals[, c("subs", "price")]
+journals$citeprice <- Journals$price/Journals$citations
+summary(journals)
+```
+
+### Estimation
+The author wants to estimate the effect of the price per citation on the number of
+library subscriptions.
+
+```{r,  echo=T}
+plot(log(subs) ~ log(citeprice), data = journals)
+jour_lm <- lm(log(subs) ~ log(citeprice), data = journals)
+abline(jour_lm)
+```
+
+Once the model is fitted, we can inspect the value of $log(citeprice)$.
+```{r,  echo=T}
+summary(jour_lm)
+```
+
+
+### Prediction
+And finally prediction 
+
+```{r,  echo=T}
+lciteprice <- seq(from = -6, to = 4, by = 0.25)
+jour_pred <- predict(jour_lm, interval = "prediction",
+  newdata = data.frame(citeprice = exp(lciteprice)))  
+plot(log(subs) ~ log(citeprice), data = journals)
+lines(jour_pred[, 1] ~ lciteprice, col = 1)    
+lines(jour_pred[, 2] ~ lciteprice, col = 1, lty = 2)
+lines(jour_pred[, 3] ~ lciteprice, col = 1, lty = 2)
+```
+
+
+## Wage equation : a Multiple Linear Regression 
+
+Bierens and Ginther (Empirical Economics 2001) analyze determinants of wages. The US Census Bureau collected 28155 observations. We have a cross-section data on males aged 18 to 70 with positive annual income greater than US$ 50 in 1992 who are not self-employed or working without pay. Finally wages are deflated by the deflator of personal consumption expenditures for 1992.
+
+### Description 
+```{r,  echo=T}
+data("CPS1988", package = "AER")
+summary(CPS1988)
+```
+
+### Estimation 
+```{r,  echo=T}
+cps_lm <- lm(log(wage) ~ experience + I(experience^2) + education + ethnicity, data = CPS1988)
+summary(cps_lm)
+```
+
+### Comparaison of two models : significativity of one variable with the Wald Test
+Is there a difference in the average log-wage (controlling for experience and education) between Caucasian and African-American men? We want to test the relevance of the variable ethnicity is the regression. 
+
+The Wald test works by testing the null hypothesis that a set of parameters is equal to some value. In the model being tested here, the null hypothesis is that the two coefficients of interest are simultaneously equal to zero. If the test fails to reject the null hypothesis, this suggests that removing the variables from the model will not substantially harm the fit of that model, since a predictor with a coefficient that is very small relative to its standard error is generally not doing much to help predict the dependent variable. 
+
+```{r,  echo=T}
+waldtest(cps_lm, . ~ . - ethnicity)
+```
+
+The p-value is less than the generally used criterion of 0.05 , so we are able to reject the null hypothesis, indicating that the coefficients are not equal. Because including statistically significant predictors should lead to better prediction (i.e., better model fit) we can conclude that including ethnicity results in a statistically significant improvement in the fit of the model.
+
+## Evolution of the consumption and the Income : Linear Regression with Time series Data
+So as to illustrate Time series, we use data from Green (2003) that gives different specifications of consumption function. Data come from the Quarterly US macroeconomic data from 1950(1) – 2000(4), provided by USMacroG, a “ts” time series and contains disposable income
+dpi and consumption (in billion USD).
+
+### Description 
+```{r,  echo=T}
+data("USMacroG", package = "AER")
+plot(USMacroG[, c("dpi", "consumption")], lty = c(3, 1),
+  lwd = 2, plot.type = "single", ylab = "")
+legend("topleft", legend = c("income", "consumption"),
+  lwd = 2, lty = c(3, 1), bty = "n")
+```
+
+### Regression
+In his paper, Greene (2003) considers two models, in one consumption responds to changes in income only over two periods, in the second past variation of the income persists. 
+
+```{r,  echo=T}
+library("dynlm")
+cons_lm1 <- dynlm(consumption ~ dpi + L(dpi), data = USMacroG)
+cons_lm2 <- dynlm(consumption ~ dpi + L(consumption),  data = USMacroG)
+summary(cons_lm1)
+summary(cons_lm2)
+```
+
+### Comparaison of models in term if residual sum of squares
+
+```{r,  echo=T}
+plot(merge(as.zoo(USMacroG[,"consumption"]), fitted(cons_lm1),
+  fitted(cons_lm2), 0, residuals(cons_lm1),
+  residuals(cons_lm2)), screens = rep(1:2, c(3, 3)),
+  col = rep(c(1, 2, 4), 2), xlab = "Time", 
+  ylab = c("Fitted values", "Residuals"), main = "")
+legend(0.05, 0.95, c("observed", "cons_lm1", "cons_lm2"), 
+  col = c(1, 2, 4), lty = 1, bty = "n")
+```
+
+## Does investment is a function of one enterprise value : Linear Regression with Panel Data
+
+Data from Grunfeld (1958) covers 11 large US firms over 20 annual observations (1935-1954). Real gross investment is explained by the real value of the form and the real value of the capital stock. 
+
+### Description 
+
+Select subset of three firms for illustration and declare individuals ("firm") and time identifier ("year").
+
+```{r,  echo=T}
+data("Grunfeld", package = "AER")
+library("plm")
+gr <- subset(Grunfeld, firm %in% c("General Electric","General Motors", "IBM"))
+pgr <- plm.data(gr, index = c("firm", "year"))
+```
+
+For later use, we also fit plain OLS on pooled data 
+```{r,  echo=T}
+gr_pool <- plm(invest ~ value + capital, data = pgr, model = "pooling")
+```
+
+
+### Regression : Fixed effects models (within)
+We have in this model an individual specific effects. 
+
+```{r,  echo=T}
+gr_fe <- plm(invest ~ value + capital, data = pgr, model = "within")
+summary(gr_fe)
+```
+
+### Are the fixed effects really needed ? 
+We compare fixed effects and pooled OLS fits via $pFtest()$.
+
+```{r,  echo=T}
+pFtest(gr_fe,gr_pool)
+```
+If the p-value is <0.05, then the fixed effects model is a better choice. Here it indicates substantial inter-firm variation. 
+
+### Regression : Random effects
+
+```{r,  echo=T}
+gr_re <- plm(invest ~ value + capital, data = pgr, 
+  model = "random", random.method = "walhus")
+summary(gr_re)
+```
+
+### Are random effect really needed 
+
+```{r,  echo=T}
+plmtest(gr_pool)
+```
+If the p-value is <0.05, then the random model is a better choice. Here it indicates heterogeneity. 
+
+## Systems of linear equations
+Seemingly unrelated regressions (SUR) model for Grunfeld data. Unlike panel data models considered above, SUR model allows for individual-specific slopes (in addition to individual-specific intercepts). Contemporaneous correlation across equations. Thus
+joint estimation of all parameters more efficient than OLS on each
+equation.
+
+We use only two firms to save space
+```{r,  echo=T}
+gr2 <- subset(Grunfeld, firm %in% c("Chrysler", "IBM"))
+pgr2 <- plm.data(gr2, c("firm", "year"))
+```
+
+### Estimation
+```{r,  echo=T}
+library("systemfit")
+gr_sur <- systemfit(invest ~ value + capital,  method = "SUR", data = pgr2)
+summary(gr_sur, residCov = FALSE, equations = FALSE)
+```
+Output indicates again that there is substantial variation among firms.
+
+# Diagnostics and Alternative Methods of Regression	
+
+We give code here to validate the linear regression models. We will cover ; i) regression diagnostics: Comparison of statistics for full data set and for data with single observations deleted ; ii) diagnostic tests: Test for heteroskedasticity, autocorrelation, and
+misspecification of the functional form, etc ; iii) Robust covariances: Covariance estimators that are consistent for a wide class of disturbance structures.
+
+We will also give hints for alternative methods of regression : regression techniques that are robust to outliers and unusual observations and model quantiles of the conditional distribution of a variable. 
+
+## Regression diagnostics
+
+Find points that are not fitted as well as they should be or have undue influence on the fitting of the model. We use the paper of Besley, Kuh adn Welsch (1980) based on deletion of observations. *PublicSchools* data provide per capita Expenditure on public schools and per capita Income by state for the 50 states of the USA plus Washington, DC., for 1979.
+
+```{r,  echo=T}
+data("PublicSchools", package = "sandwich")
+summary(PublicSchools)
+```
+
+Scatterplot with fitted linear model and three highlighted observations.We omit incomplete observations (Wisconsin) and scale income to be in 10,000 USD. 
+
+```{r,  echo=T}
+ps <- na.omit(PublicSchools)
+ps$Income <- ps$Income / 10000
+plot(Expenditure ~ Income, data = ps, ylim = c(230, 830))
+ps_lm <- lm(Expenditure ~ Income, data = ps)
+abline(ps_lm)
+id <- c(2, 24, 48)
+text(ps[id, 2:1], rownames(ps)[id], pos = 1, xpd = TRUE)
+```
+
+If you are familiar with outlier caracterization, use the following command 
+
+```{r, eval=FALSE}
+plot(ps_lm,which=1:6)
+```
+
+Alaska stands out in all plots, it has ; which = 1) a large residual ; which = 2) Upper tail of empirical distribution of residuals ; which = 3 ) Casts doubt on the assumption of homogeneous variances ; which = 4 and 6) Corresponds to an extraordinarily large Cook’s distance ; which = 5 and 6) Has the highest leverage. Deleting this observation might be an option.
+
+## Diagnostic Tests
+
+We test here for heteroskedasticity in cross-section regressions or disturbance autocorrelation in time series regressions.
+
+We can reconsider Journals data as an example for cross-section regressions.
+
+```{r, eval=FALSE }
+data("Journals", package = "AER")
+journals <- Journals[, c("subs", "price")]
+journals$citeprice <- Journals$price/Journals$citations
+journals$age <- 2000 - Journals$foundingyear
+jour_lm <- lm(log(subs) ~ log(citeprice), data = journals)
+```
+
+### Testing for heteroskedasticity
+
+With the Breusch-Pagan test 
+```{r, echo=TRUE}
+bptest(jour_lm)
+```
+
+or with the White test
+```{r, echo=TRUE}
+bptest(jour_lm, ~ log(citeprice) + I(log(citeprice)^2),
+  data = journals)
+```
+
+
+f the p-value is below 5%, we reject the null hypothesis of homoskedasticity and conclude that there is heteroskedasticity.
+
+### Testing the functional form
+
+The assumption is make that $(ε|X) = 0$ and is crucial for consistency of the
+least-squares estimator. Misspecification of the functional form, for example by omitting relevant variables, is a source of violation. The following command test if the specification is ok : 
+```{r, echo=TRUE}
+resettest(jour_lm)
+```
+if the p-value is lower than 5%, we reject the nul hypothesis that the functional form of the model is well specified. Here this is not the case. 
+
+### Testing for autocorrelation
+Time series regressions are often affected by autocorrelation (or serial correlation), just as disturbances in cross-section models are typically heteroskedastic.
+
+Let us consider the model for US consumption function. 
+
+```{r, echo=TRUE}
+library("dynlm")
+data("USMacroG", package = "AER")
+consump1 <- dynlm(consumption ~ dpi + L(dpi),  data = USMacroG)
+```
+
+A classical test for autocorrelation is the Durbin-Watson. Dwtest() implements an exact procedure for computing the p value (for Gaussian data) and also provides a normal approximation for sufficiently large samples (both depending on the regressor matrix
+X).
+
+```{r, echo=TRUE}
+dwtest(consump1)
+```
+the null hypothesis of no autocorrealation is here for example rejected.  
+
+## Robust Standard Errors and Tests
+
+As seen previously, in the presence of autocorrelation and/or heteroskedasticity, the covariance structure need to be adjusted. More often than not, form of the autocorrelation or
+heteroskedasticity is unknown. In R, vcovHC() computes all versions of covariance estimators from a fitted linear model. 
+
+
+```{r, echo=TRUE}
+vcovHC(jour_lm)
+```
+
+# Microeconometrics
+
+Many microeconometric models belong to the domain of generalized linear models (GLMs) : probit model, Poisson regression. R has a single fitting function glm() closely resembling lm(). Because of the built-in distributional assumption, hence use method of maximym likelihood (ML). 
+## Binary Dependent Variables : Probit and Logit model
+A standard normal distribution yields to a probit model whereas a logistic distribution yields to a logit model.
+
+We take the example of the Female labor force participation for 872 women from Switzerland (Gerfin, JAE 1996). 
+
+## Regression
+The dependent variable is participation and regressors are income, nonlabor income (in logs)
+education, years of formal education, age, age in decades, numbers of younger / older children
+foreign and factor indicating citizenship.
+
+```{r, echo=TRUE}
+data("SwissLabor", package = "AER")
+swiss_probit <- glm(participation ~ . + I(age^2),
+  data = SwissLabor, family = binomial(link = "probit"))
+summary(swiss_probit)
+```
+
+## Visualization
+Produces spine plot for resulting proportions of participation within age groups
+
+```{r, echo=TRUE}
+plot(participation ~ age, data = SwissLabor, ylevels = 2:1)
+```
+
+## Effect
+In linear models, the interpretation of model parameters is linear. The effects in probit model vary with regressors.
+
+You need additional step to display the average of sample marginal effect :
+
+```{r, echo=TRUE}
+fav <- mean(dnorm(predict(swiss_probit, type = "link")))
+fav * coef(swiss_probit)
+```
+
+## Goodness of fit and prediction
+
+We can display the confusion matrix 
+```{r, echo=TRUE}
+ table(true = SwissLabor$participation, pred = round(fitted(swiss_probit)))
+```
+
+Confusion matrix uses arbitrarily chosen cutoff 0.5 for predicted probabilities. To avoid choosing particular cutoff, we can use the package ROCR that evaluates performance for every conceivable cutoff; e.g., using accuracy of the model – proportion of correctly classified
+observations.
+
+```{r, echo=TRUE}
+library(ROCR)
+pred <- prediction(fitted(swiss_probit),
+  SwissLabor$participation)
+plot(performance(pred, "acc"))
+```
+Here we see that 0.5 seems to be OK. 
+
+The receiver operating characteristic (ROC) allows also to display true positive rate against false positive rate. 
+
+```{r, echo=TRUE}
+plot(performance(pred, "tpr", "fpr"))
+abline(0, 1, lty = 2)
+```
+
+## Regression Models for Count data : Poisson Models
+
+We use the RecreationDemand data that regress the number of recreational boating trips to Lake
+Somerville, TX, in 1980 on divers explicatives variables.
+
+```{r, echo=TRUE}
+data("RecreationDemand")
+rd_pois <- glm(trips ~ ., data = RecreationDemand,
+  family = poisson)
+summary(rd_pois)
+```
+
+## Dealing with overdispersion
+
+The Poisson model assumes equal mean and variance. If the variance is larger than the mean, we talk about overdispersion. Test goes as follow (Cameron and Trivedi 1990) : 
+
+```{r, echo=TRUE}
+dispersiontest(rd_pois)
+```
+
+If that doesn't hold, like here,then the Poisson model isn't correct. Quasi-poisson is one possibility when there is overdispersion.
+
+```{r, echo=TRUE}
+rd_qpois <- glm(trips ~ ., data = RecreationDemand,family = quasipoisson)
+```
+
+More flexible distribution is negative binomial with probability density function
+```{r, echo=TRUE}
+library("MASS")
+rd_nb <- glm.nb(trips ~ ., data = RecreationDemand)
+coeftest(rd_nb)
+```
+
+
+## Zero-Inflated Poisson and negative binomial models
+
+Typical problem with count data is that it have too many zeros : RecreationDemand example has 63.28% zeros and the Poisson regression provides only 41.96%.We can plot marginal distribution of response: 
+
+```{r, echo=TRUE}
+plot(table(RecreationDemand$trips),ylab="")
+```
+
+Zero-inflated Poisson (ZIP) model (Mullahy 1986, Lambert 1992) for recreational trips give the following : 
+```{r, echo=TRUE}
+library("pscl")
+rd_zinb <- zeroinfl(trips ~ . | quality + income, data = RecreationDemand, dist = "negbin")
+summary(rd_zinb)
+```
+
+## Censored Dependent Variables : Tobit Models
+Censored regression models are a class of models in which the dependent variable is censored above or below a certain threshold. A commonly used likelihood-based model to accommodate to a censored sample is the Tobit model, but quantile and nonparametric estimators have also been developed. These and other censored regression models are often confused with truncated regression models. Truncated regression models are used for data where whole observations are missing so that the values for the dependent and the independent variables are unknown. Censored regression models are used for data where only the value for the dependent variable is unknown while the values of the independent variables are still available.
+
+We use the survival package (Therneau and Grambsch 2000) to fit censored regression model and the "Fair's affairs" (Fair, JPE 1978) dataset, a survey on extramarital affairs conducted by Psychology Today (1969) and dependent variable is affairs (number of extramarital affairs during past year), regressors are notably gender, age...
+```{r, echo=TRUE}
+data("Affairs")
+aff_tob <- tobit(affairs ~ age + yearsmarried +
+  religiousness + occupation + rating, data = Affairs)
+summary(aff_tob)
+```
+
+
+# Time Series	
+
+## Infrastructure and "Naive" Methods
+
+Standard time series class in R is "ts" and aimed at regulat series such as annual, quaterly, monthly. 
+
+We take the example of the quaterly consumption of non-durables in the United Kingdom (Franses 1998)
+
+```{r, echo=TRUE}
+data("UKNonDurables")
+plot(UKNonDurables)
+```
+
+We can set time series properties and subsets observations. 
+```{r, echo=TRUE}
+tsp(UKNonDurables)
+window(UKNonDurables,end=c(1956,4))
+```
+
+If you deal with irregular series, you might need to use other package such as the zoo
+Generalization of “ts”: time stamps of arbitrary type. Numeric vectors or matrices, "index" attribute contains vector of time stamps (not just "tsp" attribute!). Regular series can be coerced back and forth between “ts” and “zoo” via as.zoo() and as.ts().
+“zoo” more convenient for daily data (e.g., “Date” time stamps) or intraday data (e.g., “POSIXct” or “chron” time stamps). More details: Zeileis and Grothendieck (JSS 2005).
+
+### Linear filtering
+
+Finite moving averages is the most important one. You can implemente it with the filter() function in R. Applied to the UKDriverDeaths database (Harvey and Durbin, JRSS A 1986), we obtain the following.
+
+```{r, echo=TRUE}
+data("UKDriverDeaths")
+plot(UKDriverDeaths)
+lines(filter(UKDriverDeaths, c(1/2, rep(1, 11), 1/2)/12),
+  col = 2)
+```
+
+### Decomposition into seasonal, trend and irregular components
+
+In R, decompose() takes simple symmetric filter for extracting trend,derives seasonal component by averaging trend-adjusted observations from corresponding periods. stl() iteratively finds seasonal and trend components by loess smoothing in moving data windows. 
+
+```{r, echo=TRUE}
+dd_dec <- decompose(log(UKDriverDeaths))
+dd_stl <- stl(log(UKDriverDeaths), s.window = 13)
+
+```
+
+## Classical Model-Based Analysis 
+
+We follow the Box-Jenkins approach for preliminary analysis.
+HERE I NEED TO PUT SOMETHING MORE 
+
+## Stationarity, unit roots, and cointegration test
+Many time series in macroeconomics and finance are nonstationary.With use the example from Franses 1998 which is a bivariate time series of average monthly European spot prices for black and white pepper (in US dollars per ton).
+
+```{r, echo=TRUE}
+data("PepperPrice")
+plot(PepperPrice, plot.type = "single", col = 1:2)
+legend("topleft", c("black", "white"), bty = "n",
+ col = 1:2, lty = rep(1,2))
+```
+
+### Unit-root test
+
+The augmented Dickey-Fuller (ADF) test can be done as follow : 
+```{r, echo=TRUE}
+library(tseries)
+adf.test(log(PepperPrice[,"white"]))
+```
+
+### stationarity test
+Kwiatkowski, Phillips, Schmidt and Shin (J. Econometrics 1992) create a test with two variants, one with a level stationnarity and the other one with a tredn stationnarity. 
+
+```{r, echo=TRUE}
+library(tseries)
+kpss.test(log(PepperPrice[,"white"]))
+```
+
+### cointegration test
+
+Engle-Granger two-step method Available in po.test() from tseries (named after Phillips and
+Ouliaris, Econometrica 1990).
+
+```{r, echo=TRUE}
+po.test(log(PepperPrice))
+```
+if the p-value is lower thant 5%, it suggests that both series are cointegrated. 
+
+
+## Time series regression and structural change
+
+### Fitting dynamic regression models
+
+```{r, echo=TRUE}
+library(dynlm)
+dd <- log(UKDriverDeaths)
+dynlm(dd ~ L(dd) + L(dd, 12))
+```
+
+
+# Support Vector Regression (SVR)
+
+## We use the reading skills database from the party package
+
+```{r, echo=TRUE}
+library(party)
+print(head(readingSkills))
+```
+
+## Fitting SVR to the dataset
+```{r, echo=TRUE}
+library(e1071)
+regressor = svm(formula = score ~ shoeSize,
+                data = readingSkills,
+                type = 'eps-regression',
+                kernel = 'radial')
+```
+
+## Predicting a new result
+
+```{r, echo=TRUE}
+y_pred = predict(regressor, data.frame(shoeSize = 26))
+```
+
+## Visualising the SVR results
+```{r, echo=TRUE}
+library(ggplot2)
+x_grid = seq(min(readingSkills$shoeSize), max(readingSkills$shoeSize), 0.1)
+ggplot() +
+  geom_point(aes(x = readingSkills$shoeSize, y = readingSkills$score),
+             colour = 'red') +
+  geom_line(aes(x = x_grid, y = predict(regressor, newdata = data.frame(shoeSize = x_grid))),
+            colour = 'blue') +
+  ggtitle('Truth or Bluff (SVR)') +
+  xlab('shoeSize') +
+  ylab('score')
+```
+
+
+# Decision Tree regression
+
+##  Ames Housing data 
+
+To illustrate various regularization concepts we will use the Ames Housing data that has been included in the AmesHousing package.
+```{r, echo=TRUE}
+library(AmesHousing)
+library(rsample)
+ames_split <- initial_split(AmesHousing::make_ames(), prop = .7)
+ames_train <- training(ames_split)
+ames_test  <- testing(ames_split)
+print(head(ames_train))
+```
+
+
+## Fitting Decision Tree Regression to the dataset
+
+```{r, echo=TRUE}
+library(rpart)
+regressor = rpart(formula = Sale_Price ~ .,
+                  data = ames_train,
+                  method = "anova",
+                  control = rpart.control(minsplit = 1,minbucket = 1))
+
+```
+
+## Plot of the Graph
+We can visualize our model with rpart.plot. rpart.plot has many plotting options, which we’ll leave to the reader to explore. However, in the default print it will show the percentage of data that fall to that node and the average sales price for that branch.
+
+```{r, echo=TRUE}
+library(rattle)
+library(rpart.plot)
+library(RColorBrewer)
+rpart.plot(regressor)
+
+```
+
+
+
+# Random Forest Regression
+
+##  Ames Housing data 
+
+To illustrate various regularization concepts we will use the Ames Housing data that has been included in the AmesHousing package.
+```{r, echo=TRUE}
+library(AmesHousing)
+library(rsample)
+ames_split <- initial_split(AmesHousing::make_ames(), prop = .7)
+ames_train <- training(ames_split)
+ames_test  <- testing(ames_split)
+```
+
+
+##Train the model
+
+```{r, echo=TRUE, message=FALSE}
+library(randomForest)
+regressor = randomForest(Sale_Price ~.,
+                         data = ames_train,
+                         ntree = 5)
+print(regressor)
+```
+
+
+## Test of the model 
+```{r, echo=TRUE}
+pred_1 = predict(regressor,ames_test)
+```
+
+Variable Importance 
+```{r, echo=TRUE}
+varImpPlot(regressor)
+```
+
+# Classification 
+
+## Logistic Regression
+
+
+
+## K-Nearest Neighborst (K-NN)
+
+## Support Vector Machine (SVM)
+
+## Kernel SVM
+
+## Naive Bayes
+
+## Decision Tree Classification
+
+## Random Forest Classification

@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Course</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/clipboard-1.7.1/clipboard.min.js"></script>
+<link href="site_libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+<link href="site_libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+<script src="site_libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 64px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h2 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h3 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h4 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h5 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h6 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Léo Quennesson</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="project_1.html">TED</a>
+</li>
+<li>
+  <a href="project_2.html">API LOL</a>
+</li>
+<li>
+  <a href="data_cleaning.html">Data Prepocessing</a>
+</li>
+<li>
+  <a href="course.html">Courses</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="contact.html">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/leoquennesson">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://www.linkedin.com/in/l%C3%A9o-quennesson-920658b7/">
+    <span class="fa fa-linkedin fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Course</h1>
+
+</div>
+
+
+<script>
+  addClassKlippyTo("pre.r, pre.markdown");
+  addKlippy('right', 'top', 'auto', '1', 'Copy code', 'Copied!');
+</script>
+<div id="introduction-and-basics" class="section level1">
+<h1>Introduction and basics</h1>
+<p>You can find here pratical examples found in <em>Introductory Econometrics: A Modern Approach, 6e by Jeffrey M. Wooldridge</em> and <em>Applied Econometrics with R of Kleiber C, Zeileis A (2008)</em>.</p>
+<p><img src="png/woolridge.jpg" width=35% > <img src="png/AER.jpg" width=35% ></p>
+<p>The wooldridge and AER packages allow you to load all the databases you need to illustrate those models.</p>
+<pre class="r"><code>install.packages(c(&quot;wooldridge&quot;,&quot;AER&quot;))</code></pre>
+<pre class="r"><code>library(wooldridge)
+library(AER)</code></pre>
+</div>
+<div id="linear-regression" class="section level1">
+<h1>Linear Regression</h1>
+<div id="demand-for-economic-journals-a-simple-linear-regression" class="section level2">
+<h2>Demand for economic journals : a simple Linear Regression</h2>
+<p>Data set from Stock &amp; Watson (2007), originally collected by T. Bergstrom, on subscriptions to 180 economics journals at US libraries, for the year 2000. Bergstrom (2001) argues that commercial publishers are charging excessive prices for academic journals and also suggests ways that economists can deal with this problem. See <a href="http://www.econ.ucsb.edu/~tedb/Journals/jpricing.html" class="uri">http://www.econ.ucsb.edu/~tedb/Journals/jpricing.html</a></p>
+<div id="description" class="section level3">
+<h3>Description</h3>
+<pre class="r"><code>data(&quot;Journals&quot;, package = &quot;AER&quot;)
+journals &lt;- Journals[, c(&quot;subs&quot;, &quot;price&quot;)]
+journals$citeprice &lt;- Journals$price/Journals$citations
+summary(journals)</code></pre>
+<pre><code>##       subs            price          citeprice        
+##  Min.   :   2.0   Min.   :  20.0   Min.   : 0.005223  
+##  1st Qu.:  52.0   1st Qu.: 134.5   1st Qu.: 0.464495  
+##  Median : 122.5   Median : 282.0   Median : 1.320513  
+##  Mean   : 196.9   Mean   : 417.7   Mean   : 2.548455  
+##  3rd Qu.: 268.2   3rd Qu.: 540.8   3rd Qu.: 3.440171  
+##  Max.   :1098.0   Max.   :2120.0   Max.   :24.459459</code></pre>
+</div>
+<div id="estimation" class="section level3">
+<h3>Estimation</h3>
+<p>The author wants to estimate the effect of the price per citation on the number of library subscriptions.</p>
+<pre class="r"><code>plot(log(subs) ~ log(citeprice), data = journals)
+jour_lm &lt;- lm(log(subs) ~ log(citeprice), data = journals)
+abline(jour_lm)</code></pre>
+<p><img src="course_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>Once the model is fitted, we can inspect the value of <span class="math inline">\(log(citeprice)\)</span>.</p>
+<pre class="r"><code>summary(jour_lm)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = log(subs) ~ log(citeprice), data = journals)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.72478 -0.53609  0.03721  0.46619  1.84808 
+## 
+## Coefficients:
+##                Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)     4.76621    0.05591   85.25   &lt;2e-16 ***
+## log(citeprice) -0.53305    0.03561  -14.97   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.7497 on 178 degrees of freedom
+## Multiple R-squared:  0.5573, Adjusted R-squared:  0.5548 
+## F-statistic:   224 on 1 and 178 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div id="prediction" class="section level3">
+<h3>Prediction</h3>
+<p>And finally prediction</p>
+<pre class="r"><code>lciteprice &lt;- seq(from = -6, to = 4, by = 0.25)
+jour_pred &lt;- predict(jour_lm, interval = &quot;prediction&quot;,
+  newdata = data.frame(citeprice = exp(lciteprice)))  
+plot(log(subs) ~ log(citeprice), data = journals)
+lines(jour_pred[, 1] ~ lciteprice, col = 1)    
+lines(jour_pred[, 2] ~ lciteprice, col = 1, lty = 2)
+lines(jour_pred[, 3] ~ lciteprice, col = 1, lty = 2)</code></pre>
+<p><img src="course_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>
+</div>
+<div id="wage-equation-a-multiple-linear-regression" class="section level2">
+<h2>Wage equation : a Multiple Linear Regression</h2>
+<p>Bierens and Ginther (Empirical Economics 2001) analyze determinants of wages. The US Census Bureau collected 28155 observations. We have a cross-section data on males aged 18 to 70 with positive annual income greater than US$ 50 in 1992 who are not self-employed or working without pay. Finally wages are deflated by the deflator of personal consumption expenditures for 1992.</p>
+<div id="description-1" class="section level3">
+<h3>Description</h3>
+<pre class="r"><code>data(&quot;CPS1988&quot;, package = &quot;AER&quot;)
+summary(CPS1988)</code></pre>
+<pre><code>##       wage            education       experience   ethnicity     smsa      
+##  Min.   :   50.05   Min.   : 0.00   Min.   :-4.0   cauc:25923   no : 7223  
+##  1st Qu.:  308.64   1st Qu.:12.00   1st Qu.: 8.0   afam: 2232   yes:20932  
+##  Median :  522.32   Median :12.00   Median :16.0                           
+##  Mean   :  603.73   Mean   :13.07   Mean   :18.2                           
+##  3rd Qu.:  783.48   3rd Qu.:15.00   3rd Qu.:27.0                           
+##  Max.   :18777.20   Max.   :18.00   Max.   :63.0                           
+##        region     parttime   
+##  northeast:6441   no :25631  
+##  midwest  :6863   yes: 2524  
+##  south    :8760              
+##  west     :6091              
+##                              
+## </code></pre>
+</div>
+<div id="estimation-1" class="section level3">
+<h3>Estimation</h3>
+<pre class="r"><code>cps_lm &lt;- lm(log(wage) ~ experience + I(experience^2) + education + ethnicity, data = CPS1988)
+summary(cps_lm)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = log(wage) ~ experience + I(experience^2) + education + 
+##     ethnicity, data = CPS1988)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.9428 -0.3162  0.0580  0.3756  4.3830 
+## 
+## Coefficients:
+##                   Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)      4.321e+00  1.917e-02  225.38   &lt;2e-16 ***
+## experience       7.747e-02  8.800e-04   88.03   &lt;2e-16 ***
+## I(experience^2) -1.316e-03  1.899e-05  -69.31   &lt;2e-16 ***
+## education        8.567e-02  1.272e-03   67.34   &lt;2e-16 ***
+## ethnicityafam   -2.434e-01  1.292e-02  -18.84   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.5839 on 28150 degrees of freedom
+## Multiple R-squared:  0.3347, Adjusted R-squared:  0.3346 
+## F-statistic:  3541 on 4 and 28150 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div id="comparaison-of-two-models-significativity-of-one-variable-with-the-wald-test" class="section level3">
+<h3>Comparaison of two models : significativity of one variable with the Wald Test</h3>
+<p>Is there a difference in the average log-wage (controlling for experience and education) between Caucasian and African-American men? We want to test the relevance of the variable ethnicity is the regression.</p>
+<p>The Wald test works by testing the null hypothesis that a set of parameters is equal to some value. In the model being tested here, the null hypothesis is that the two coefficients of interest are simultaneously equal to zero. If the test fails to reject the null hypothesis, this suggests that removing the variables from the model will not substantially harm the fit of that model, since a predictor with a coefficient that is very small relative to its standard error is generally not doing much to help predict the dependent variable.</p>
+<pre class="r"><code>waldtest(cps_lm, . ~ . - ethnicity)</code></pre>
+<pre><code>## Wald test
+## 
+## Model 1: log(wage) ~ experience + I(experience^2) + education + ethnicity
+## Model 2: log(wage) ~ experience + I(experience^2) + education
+##   Res.Df Df      F    Pr(&gt;F)    
+## 1  28150                        
+## 2  28151 -1 354.91 &lt; 2.2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>The p-value is less than the generally used criterion of 0.05 , so we are able to reject the null hypothesis, indicating that the coefficients are not equal. Because including statistically significant predictors should lead to better prediction (i.e., better model fit) we can conclude that including ethnicity results in a statistically significant improvement in the fit of the model.</p>
+</div>
+</div>
+<div id="evolution-of-the-consumption-and-the-income-linear-regression-with-time-series-data" class="section level2">
+<h2>Evolution of the consumption and the Income : Linear Regression with Time series Data</h2>
+<p>So as to illustrate Time series, we use data from Green (2003) that gives different specifications of consumption function. Data come from the Quarterly US macroeconomic data from 1950(1) – 2000(4), provided by USMacroG, a “ts” time series and contains disposable income dpi and consumption (in billion USD).</p>
+<div id="description-2" class="section level3">
+<h3>Description</h3>
+<pre class="r"><code>data(&quot;USMacroG&quot;, package = &quot;AER&quot;)
+plot(USMacroG[, c(&quot;dpi&quot;, &quot;consumption&quot;)], lty = c(3, 1),
+  lwd = 2, plot.type = &quot;single&quot;, ylab = &quot;&quot;)
+legend(&quot;topleft&quot;, legend = c(&quot;income&quot;, &quot;consumption&quot;),
+  lwd = 2, lty = c(3, 1), bty = &quot;n&quot;)</code></pre>
+<p><img src="course_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+</div>
+<div id="regression" class="section level3">
+<h3>Regression</h3>
+<p>In his paper, Greene (2003) considers two models, in one consumption responds to changes in income only over two periods, in the second past variation of the income persists.</p>
+<pre class="r"><code>library(&quot;dynlm&quot;)
+cons_lm1 &lt;- dynlm(consumption ~ dpi + L(dpi), data = USMacroG)
+cons_lm2 &lt;- dynlm(consumption ~ dpi + L(consumption),  data = USMacroG)
+summary(cons_lm1)</code></pre>
+<pre><code>## 
+## Time series regression with &quot;ts&quot; data:
+## Start = 1950(2), End = 2000(4)
+## 
+## Call:
+## dynlm(formula = consumption ~ dpi + L(dpi), data = USMacroG)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -190.02  -56.68    1.58   49.91  323.94 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -81.07959   14.50814  -5.589 7.43e-08 ***
+## dpi           0.89117    0.20625   4.321 2.45e-05 ***
+## L(dpi)        0.03091    0.20754   0.149    0.882    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 87.58 on 200 degrees of freedom
+## Multiple R-squared:  0.9964, Adjusted R-squared:  0.9964 
+## F-statistic: 2.785e+04 on 2 and 200 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre class="r"><code>summary(cons_lm2)</code></pre>
+<pre><code>## 
+## Time series regression with &quot;ts&quot; data:
+## Start = 1950(2), End = 2000(4)
+## 
+## Call:
+## dynlm(formula = consumption ~ dpi + L(consumption), data = USMacroG)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -101.303   -9.674    1.141   12.691   45.322 
+## 
+## Coefficients:
+##                 Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)     0.535216   3.845170   0.139    0.889    
+## dpi            -0.004064   0.016626  -0.244    0.807    
+## L(consumption)  1.013111   0.018161  55.785   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 21.52 on 200 degrees of freedom
+## Multiple R-squared:  0.9998, Adjusted R-squared:  0.9998 
+## F-statistic: 4.627e+05 on 2 and 200 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div id="comparaison-of-models-in-term-if-residual-sum-of-squares" class="section level3">
+<h3>Comparaison of models in term if residual sum of squares</h3>
+<pre class="r"><code>plot(merge(as.zoo(USMacroG[,&quot;consumption&quot;]), fitted(cons_lm1),
+  fitted(cons_lm2), 0, residuals(cons_lm1),
+  residuals(cons_lm2)), screens = rep(1:2, c(3, 3)),
+  col = rep(c(1, 2, 4), 2), xlab = &quot;Time&quot;, 
+  ylab = c(&quot;Fitted values&quot;, &quot;Residuals&quot;), main = &quot;&quot;)
+legend(0.05, 0.95, c(&quot;observed&quot;, &quot;cons_lm1&quot;, &quot;cons_lm2&quot;), 
+  col = c(1, 2, 4), lty = 1, bty = &quot;n&quot;)</code></pre>
+<p><img src="course_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+</div>
+</div>
+<div id="does-investment-is-a-function-of-one-enterprise-value-linear-regression-with-panel-data" class="section level2">
+<h2>Does investment is a function of one enterprise value : Linear Regression with Panel Data</h2>
+<p>Data from Grunfeld (1958) covers 11 large US firms over 20 annual observations (1935-1954). Real gross investment is explained by the real value of the form and the real value of the capital stock.</p>
+<div id="description-3" class="section level3">
+<h3>Description</h3>
+<p>Select subset of three firms for illustration and declare individuals (“firm”) and time identifier (“year”).</p>
+<pre class="r"><code>data(&quot;Grunfeld&quot;, package = &quot;AER&quot;)
+library(&quot;plm&quot;)
+gr &lt;- subset(Grunfeld, firm %in% c(&quot;General Electric&quot;,&quot;General Motors&quot;, &quot;IBM&quot;))
+pgr &lt;- plm.data(gr, index = c(&quot;firm&quot;, &quot;year&quot;))</code></pre>
+<pre><code>## Warning: use of &#39;plm.data&#39; is discouraged, better use &#39;pdata.frame&#39; instead</code></pre>
+<p>For later use, we also fit plain OLS on pooled data</p>
+<pre class="r"><code>gr_pool &lt;- plm(invest ~ value + capital, data = pgr, model = &quot;pooling&quot;)</code></pre>
+</div>
+<div id="regression-fixed-effects-models-within" class="section level3">
+<h3>Regression : Fixed effects models (within)</h3>
+<p>We have in this model an individual specific effects.</p>
+<pre class="r"><code>gr_fe &lt;- plm(invest ~ value + capital, data = pgr, model = &quot;within&quot;)
+summary(gr_fe)</code></pre>
+<pre><code>## Oneway (individual) effect Within Model
+## 
+## Call:
+## plm(formula = invest ~ value + capital, data = pgr, model = &quot;within&quot;)
+## 
+## Balanced Panel: n = 3, T = 20, N = 60
+## 
+## Residuals:
+##      Min.   1st Qu.    Median   3rd Qu.      Max. 
+## -167.3305  -26.1407    2.0878   26.8442  201.6813 
+## 
+## Coefficients:
+##         Estimate Std. Error t-value  Pr(&gt;|t|)    
+## value   0.104914   0.016331  6.4242 3.296e-08 ***
+## capital 0.345298   0.024392 14.1564 &lt; 2.2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Total Sum of Squares:    1888900
+## Residual Sum of Squares: 243980
+## R-Squared:      0.87084
+## Adj. R-Squared: 0.86144
+## F-statistic: 185.407 on 2 and 55 DF, p-value: &lt; 2.22e-16</code></pre>
+</div>
+<div id="are-the-fixed-effects-really-needed" class="section level3">
+<h3>Are the fixed effects really needed ?</h3>
+<p>We compare fixed effects and pooled OLS fits via <span class="math inline">\(pFtest()\)</span>.</p>
+<pre class="r"><code>pFtest(gr_fe,gr_pool)</code></pre>
+<pre><code>## 
+##  F test for individual effects
+## 
+## data:  invest ~ value + capital
+## F = 56.825, df1 = 2, df2 = 55, p-value = 4.148e-14
+## alternative hypothesis: significant effects</code></pre>
+<p>If the p-value is &lt;0.05, then the fixed effects model is a better choice. Here it indicates substantial inter-firm variation.</p>
+</div>
+<div id="regression-random-effects" class="section level3">
+<h3>Regression : Random effects</h3>
+<pre class="r"><code>gr_re &lt;- plm(invest ~ value + capital, data = pgr, 
+  model = &quot;random&quot;, random.method = &quot;walhus&quot;)
+summary(gr_re)</code></pre>
+<pre><code>## Oneway (individual) effect Random Effect Model 
+##    (Wallace-Hussain&#39;s transformation)
+## 
+## Call:
+## plm(formula = invest ~ value + capital, data = pgr, model = &quot;random&quot;, 
+##     random.method = &quot;walhus&quot;)
+## 
+## Balanced Panel: n = 3, T = 20, N = 60
+## 
+## Effects:
+##                   var std.dev share
+## idiosyncratic 4389.31   66.25 0.352
+## individual    8079.74   89.89 0.648
+## theta: 0.8374
+## 
+## Residuals:
+##      Min.   1st Qu.    Median   3rd Qu.      Max. 
+## -187.3987  -32.9206    6.9595   31.4322  210.2006 
+## 
+## Coefficients:
+##                Estimate  Std. Error z-value  Pr(&gt;|z|)    
+## (Intercept) -109.976572   61.701384 -1.7824   0.07468 .  
+## value          0.104280    0.014996  6.9539 3.553e-12 ***
+## capital        0.344784    0.024520 14.0613 &lt; 2.2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Total Sum of Squares:    1988300
+## Residual Sum of Squares: 257520
+## R-Squared:      0.87048
+## Adj. R-Squared: 0.86594
+## Chisq: 383.089 on 2 DF, p-value: &lt; 2.22e-16</code></pre>
+</div>
+<div id="are-random-effect-really-needed" class="section level3">
+<h3>Are random effect really needed</h3>
+<pre class="r"><code>plmtest(gr_pool)</code></pre>
+<pre><code>## 
+##  Lagrange Multiplier Test - (Honda) for balanced panels
+## 
+## data:  invest ~ value + capital
+## normal = 15.47, p-value &lt; 2.2e-16
+## alternative hypothesis: significant effects</code></pre>
+<p>If the p-value is &lt;0.05, then the random model is a better choice. Here it indicates heterogeneity.</p>
+</div>
+</div>
+<div id="systems-of-linear-equations" class="section level2">
+<h2>Systems of linear equations</h2>
+<p>Seemingly unrelated regressions (SUR) model for Grunfeld data. Unlike panel data models considered above, SUR model allows for individual-specific slopes (in addition to individual-specific intercepts). Contemporaneous correlation across equations. Thus joint estimation of all parameters more efficient than OLS on each equation.</p>
+<p>We use only two firms to save space</p>
+<pre class="r"><code>gr2 &lt;- subset(Grunfeld, firm %in% c(&quot;Chrysler&quot;, &quot;IBM&quot;))
+pgr2 &lt;- plm.data(gr2, c(&quot;firm&quot;, &quot;year&quot;))</code></pre>
+<pre><code>## Warning: use of &#39;plm.data&#39; is discouraged, better use &#39;pdata.frame&#39; instead</code></pre>
+<div id="estimation-2" class="section level3">
+<h3>Estimation</h3>
+<pre class="r"><code>library(&quot;systemfit&quot;)</code></pre>
+<pre><code>## Loading required package: Matrix</code></pre>
+<pre><code>## 
+## Please cite the &#39;systemfit&#39; package as:
+## Arne Henningsen and Jeff D. Hamann (2007). systemfit: A Package for Estimating Systems of Simultaneous Equations in R. Journal of Statistical Software 23(4), 1-40. http://www.jstatsoft.org/v23/i04/.
+## 
+## If you have questions, suggestions, or comments regarding the &#39;systemfit&#39; package, please use a forum or &#39;tracker&#39; at systemfit&#39;s R-Forge site:
+## https://r-forge.r-project.org/projects/systemfit/</code></pre>
+<pre class="r"><code>gr_sur &lt;- systemfit(invest ~ value + capital,  method = &quot;SUR&quot;, data = pgr2)
+summary(gr_sur, residCov = FALSE, equations = FALSE)</code></pre>
+<pre><code>## 
+## systemfit results 
+## method: SUR 
+## 
+##         N DF     SSR detRCov   OLS-R2 McElroy-R2
+## system 40 34 4113.64   11022 0.928939   0.927094
+## 
+##           N DF     SSR      MSE     RMSE       R2   Adj R2
+## Chrysler 20 17 3001.64 176.5672 13.28786 0.913457 0.903276
+## IBM      20 17 1112.00  65.4117  8.08775 0.952079 0.946441
+## 
+## 
+## Coefficients:
+##                        Estimate Std. Error  t value   Pr(&gt;|t|)    
+## Chrysler_(Intercept) -5.7031286 13.2773843 -0.42954 0.67292712    
+## Chrysler_value        0.0779871  0.0195817  3.98266 0.00096271 ***
+## Chrysler_capital      0.3114785  0.0286957 10.85455 4.5944e-09 ***
+## IBM_(Intercept)      -8.0908189  4.5216484 -1.78935 0.09138881 .  
+## IBM_value             0.1272417  0.0306021  4.15794 0.00065881 ***
+## IBM_capital           0.0966341  0.0983302  0.98275 0.33951047    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Output indicates again that there is substantial variation among firms.</p>
+</div>
+</div>
+</div>
+<div id="diagnostics-and-alternative-methods-of-regression" class="section level1">
+<h1>Diagnostics and Alternative Methods of Regression</h1>
+<p>We give code here to validate the linear regression models. We will cover ; i) regression diagnostics: Comparison of statistics for full data set and for data with single observations deleted ; ii) diagnostic tests: Test for heteroskedasticity, autocorrelation, and misspecification of the functional form, etc ; iii) Robust covariances: Covariance estimators that are consistent for a wide class of disturbance structures.</p>
+<p>We will also give hints for alternative methods of regression : regression techniques that are robust to outliers and unusual observations and model quantiles of the conditional distribution of a variable.</p>
+<div id="regression-diagnostics" class="section level2">
+<h2>Regression diagnostics</h2>
+<p>Find points that are not fitted as well as they should be or have undue influence on the fitting of the model. We use the paper of Besley, Kuh adn Welsch (1980) based on deletion of observations. <em>PublicSchools</em> data provide per capita Expenditure on public schools and per capita Income by state for the 50 states of the USA plus Washington, DC., for 1979.</p>
+<pre class="r"><code>data(&quot;PublicSchools&quot;, package = &quot;sandwich&quot;)
+summary(PublicSchools)</code></pre>
+<pre><code>##   Expenditure        Income     
+##  Min.   :259.0   Min.   : 5736  
+##  1st Qu.:315.2   1st Qu.: 6670  
+##  Median :354.0   Median : 7597  
+##  Mean   :373.3   Mean   : 7608  
+##  3rd Qu.:426.2   3rd Qu.: 8286  
+##  Max.   :821.0   Max.   :10851  
+##  NA&#39;s   :1</code></pre>
+<p>Scatterplot with fitted linear model and three highlighted observations.We omit incomplete observations (Wisconsin) and scale income to be in 10,000 USD.</p>
+<pre class="r"><code>ps &lt;- na.omit(PublicSchools)
+ps$Income &lt;- ps$Income / 10000
+plot(Expenditure ~ Income, data = ps, ylim = c(230, 830))
+ps_lm &lt;- lm(Expenditure ~ Income, data = ps)
+abline(ps_lm)
+id &lt;- c(2, 24, 48)
+text(ps[id, 2:1], rownames(ps)[id], pos = 1, xpd = TRUE)</code></pre>
+<p><img src="course_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p>If you are familiar with outlier caracterization, use the following command</p>
+<pre class="r"><code>plot(ps_lm,which=1:6)</code></pre>
+<p>Alaska stands out in all plots, it has ; which = 1) a large residual ; which = 2) Upper tail of empirical distribution of residuals ; which = 3 ) Casts doubt on the assumption of homogeneous variances ; which = 4 and 6) Corresponds to an extraordinarily large Cook’s distance ; which = 5 and 6) Has the highest leverage. Deleting this observation might be an option.</p>
+</div>
+<div id="diagnostic-tests" class="section level2">
+<h2>Diagnostic Tests</h2>
+<p>We test here for heteroskedasticity in cross-section regressions or disturbance autocorrelation in time series regressions.</p>
+<p>We can reconsider Journals data as an example for cross-section regressions.</p>
+<pre class="r"><code>data(&quot;Journals&quot;, package = &quot;AER&quot;)
+journals &lt;- Journals[, c(&quot;subs&quot;, &quot;price&quot;)]
+journals$citeprice &lt;- Journals$price/Journals$citations
+journals$age &lt;- 2000 - Journals$foundingyear
+jour_lm &lt;- lm(log(subs) ~ log(citeprice), data = journals)</code></pre>
+<div id="testing-for-heteroskedasticity" class="section level3">
+<h3>Testing for heteroskedasticity</h3>
+<p>With the Breusch-Pagan test</p>
+<pre class="r"><code>bptest(jour_lm)</code></pre>
+<pre><code>## 
+##  studentized Breusch-Pagan test
+## 
+## data:  jour_lm
+## BP = 9.803, df = 1, p-value = 0.001742</code></pre>
+<p>or with the White test</p>
+<pre class="r"><code>bptest(jour_lm, ~ log(citeprice) + I(log(citeprice)^2),
+  data = journals)</code></pre>
+<pre><code>## 
+##  studentized Breusch-Pagan test
+## 
+## data:  jour_lm
+## BP = 10.912, df = 2, p-value = 0.004271</code></pre>
+<p>f the p-value is below 5%, we reject the null hypothesis of homoskedasticity and conclude that there is heteroskedasticity.</p>
+</div>
+<div id="testing-the-functional-form" class="section level3">
+<h3>Testing the functional form</h3>
+<p>The assumption is make that <span class="math inline">\((ε|X) = 0\)</span> and is crucial for consistency of the least-squares estimator. Misspecification of the functional form, for example by omitting relevant variables, is a source of violation. The following command test if the specification is ok :</p>
+<pre class="r"><code>resettest(jour_lm)</code></pre>
+<pre><code>## 
+##  RESET test
+## 
+## data:  jour_lm
+## RESET = 1.4409, df1 = 2, df2 = 176, p-value = 0.2395</code></pre>
+<p>if the p-value is lower than 5%, we reject the nul hypothesis that the functional form of the model is well specified. Here this is not the case.</p>
+</div>
+<div id="testing-for-autocorrelation" class="section level3">
+<h3>Testing for autocorrelation</h3>
+<p>Time series regressions are often affected by autocorrelation (or serial correlation), just as disturbances in cross-section models are typically heteroskedastic.</p>
+<p>Let us consider the model for US consumption function.</p>
+<pre class="r"><code>library(&quot;dynlm&quot;)
+data(&quot;USMacroG&quot;, package = &quot;AER&quot;)
+consump1 &lt;- dynlm(consumption ~ dpi + L(dpi),  data = USMacroG)</code></pre>
+<p>A classical test for autocorrelation is the Durbin-Watson. Dwtest() implements an exact procedure for computing the p value (for Gaussian data) and also provides a normal approximation for sufficiently large samples (both depending on the regressor matrix X).</p>
+<pre class="r"><code>dwtest(consump1)</code></pre>
+<pre><code>## 
+##  Durbin-Watson test
+## 
+## data:  consump1
+## DW = 0.086636, p-value &lt; 2.2e-16
+## alternative hypothesis: true autocorrelation is greater than 0</code></pre>
+<p>the null hypothesis of no autocorrealation is here for example rejected.</p>
+</div>
+</div>
+<div id="robust-standard-errors-and-tests" class="section level2">
+<h2>Robust Standard Errors and Tests</h2>
+<p>As seen previously, in the presence of autocorrelation and/or heteroskedasticity, the covariance structure need to be adjusted. More often than not, form of the autocorrelation or heteroskedasticity is unknown. In R, vcovHC() computes all versions of covariance estimators from a fitted linear model.</p>
+<pre class="r"><code>vcovHC(jour_lm)</code></pre>
+<pre><code>##                (Intercept) log(citeprice)
+## (Intercept)    0.003085261    0.000693040
+## log(citeprice) 0.000693040    0.001188432</code></pre>
+</div>
+</div>
+<div id="microeconometrics" class="section level1">
+<h1>Microeconometrics</h1>
+<p>Many microeconometric models belong to the domain of generalized linear models (GLMs) : probit model, Poisson regression. R has a single fitting function glm() closely resembling lm(). Because of the built-in distributional assumption, hence use method of maximym likelihood (ML). ## Binary Dependent Variables : Probit and Logit model A standard normal distribution yields to a probit model whereas a logistic distribution yields to a logit model.</p>
+<p>We take the example of the Female labor force participation for 872 women from Switzerland (Gerfin, JAE 1996).</p>
+<div id="regression-1" class="section level2">
+<h2>Regression</h2>
+<p>The dependent variable is participation and regressors are income, nonlabor income (in logs) education, years of formal education, age, age in decades, numbers of younger / older children foreign and factor indicating citizenship.</p>
+<pre class="r"><code>data(&quot;SwissLabor&quot;, package = &quot;AER&quot;)
+swiss_probit &lt;- glm(participation ~ . + I(age^2),
+  data = SwissLabor, family = binomial(link = &quot;probit&quot;))
+summary(swiss_probit)</code></pre>
+<pre><code>## 
+## Call:
+## glm(formula = participation ~ . + I(age^2), family = binomial(link = &quot;probit&quot;), 
+##     data = SwissLabor)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.9191  -0.9695  -0.4792   1.0209   2.4803  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  3.74909    1.40695   2.665  0.00771 ** 
+## income      -0.66694    0.13196  -5.054 4.33e-07 ***
+## age          2.07530    0.40544   5.119 3.08e-07 ***
+## education    0.01920    0.01793   1.071  0.28428    
+## youngkids   -0.71449    0.10039  -7.117 1.10e-12 ***
+## oldkids     -0.14698    0.05089  -2.888  0.00387 ** 
+## foreignyes   0.71437    0.12133   5.888 3.92e-09 ***
+## I(age^2)    -0.29434    0.04995  -5.893 3.79e-09 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 1203.2  on 871  degrees of freedom
+## Residual deviance: 1017.2  on 864  degrees of freedom
+## AIC: 1033.2
+## 
+## Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+<div id="visualization" class="section level2">
+<h2>Visualization</h2>
+<p>Produces spine plot for resulting proportions of participation within age groups</p>
+<pre class="r"><code>plot(participation ~ age, data = SwissLabor, ylevels = 2:1)</code></pre>
+<p><img src="course_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+</div>
+<div id="effect" class="section level2">
+<h2>Effect</h2>
+<p>In linear models, the interpretation of model parameters is linear. The effects in probit model vary with regressors.</p>
+<p>You need additional step to display the average of sample marginal effect :</p>
+<pre class="r"><code>fav &lt;- mean(dnorm(predict(swiss_probit, type = &quot;link&quot;)))
+fav * coef(swiss_probit)</code></pre>
+<pre><code>##  (Intercept)       income          age    education    youngkids      oldkids 
+##  1.241929965 -0.220931858  0.687466185  0.006358743 -0.236682273 -0.048690170 
+##   foreignyes     I(age^2) 
+##  0.236644422 -0.097504844</code></pre>
+</div>
+<div id="goodness-of-fit-and-prediction" class="section level2">
+<h2>Goodness of fit and prediction</h2>
+<p>We can display the confusion matrix</p>
+<pre class="r"><code> table(true = SwissLabor$participation, pred = round(fitted(swiss_probit)))</code></pre>
+<pre><code>##      pred
+## true    0   1
+##   no  337 134
+##   yes 146 255</code></pre>
+<p>Confusion matrix uses arbitrarily chosen cutoff 0.5 for predicted probabilities. To avoid choosing particular cutoff, we can use the package ROCR that evaluates performance for every conceivable cutoff; e.g., using accuracy of the model – proportion of correctly classified observations.</p>
+<pre class="r"><code>library(ROCR)
+pred &lt;- prediction(fitted(swiss_probit),
+  SwissLabor$participation)
+plot(performance(pred, &quot;acc&quot;))</code></pre>
+<p><img src="course_files/figure-html/unnamed-chunk-35-1.png" width="672" /> Here we see that 0.5 seems to be OK.</p>
+<p>The receiver operating characteristic (ROC) allows also to display true positive rate against false positive rate.</p>
+<pre class="r"><code>plot(performance(pred, &quot;tpr&quot;, &quot;fpr&quot;))
+abline(0, 1, lty = 2)</code></pre>
+<p><img src="course_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+</div>
+<div id="regression-models-for-count-data-poisson-models" class="section level2">
+<h2>Regression Models for Count data : Poisson Models</h2>
+<p>We use the RecreationDemand data that regress the number of recreational boating trips to Lake Somerville, TX, in 1980 on divers explicatives variables.</p>
+<pre class="r"><code>data(&quot;RecreationDemand&quot;)
+rd_pois &lt;- glm(trips ~ ., data = RecreationDemand,
+  family = poisson)
+summary(rd_pois)</code></pre>
+<pre><code>## 
+## Call:
+## glm(formula = trips ~ ., family = poisson, data = RecreationDemand)
+## 
+## Deviance Residuals: 
+##      Min        1Q    Median        3Q       Max  
+## -11.8465   -1.1411   -0.8896   -0.4780   18.6071  
+## 
+## Coefficients:
+##              Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  0.264993   0.093722   2.827  0.00469 ** 
+## quality      0.471726   0.017091  27.602  &lt; 2e-16 ***
+## skiyes       0.418214   0.057190   7.313 2.62e-13 ***
+## income      -0.111323   0.019588  -5.683 1.32e-08 ***
+## userfeeyes   0.898165   0.078985  11.371  &lt; 2e-16 ***
+## costC       -0.003430   0.003118  -1.100  0.27131    
+## costS       -0.042536   0.001670 -25.467  &lt; 2e-16 ***
+## costH        0.036134   0.002710  13.335  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for poisson family taken to be 1)
+## 
+##     Null deviance: 4849.7  on 658  degrees of freedom
+## Residual deviance: 2305.8  on 651  degrees of freedom
+## AIC: 3074.9
+## 
+## Number of Fisher Scoring iterations: 7</code></pre>
+</div>
+<div id="dealing-with-overdispersion" class="section level2">
+<h2>Dealing with overdispersion</h2>
+<p>The Poisson model assumes equal mean and variance. If the variance is larger than the mean, we talk about overdispersion. Test goes as follow (Cameron and Trivedi 1990) :</p>
+<pre class="r"><code>dispersiontest(rd_pois)</code></pre>
+<pre><code>## 
+##  Overdispersion test
+## 
+## data:  rd_pois
+## z = 2.4116, p-value = 0.007941
+## alternative hypothesis: true dispersion is greater than 1
+## sample estimates:
+## dispersion 
+##     6.5658</code></pre>
+<p>If that doesn’t hold, like here,then the Poisson model isn’t correct. Quasi-poisson is one possibility when there is overdispersion.</p>
+<pre class="r"><code>rd_qpois &lt;- glm(trips ~ ., data = RecreationDemand,family = quasipoisson)</code></pre>
+<p>More flexible distribution is negative binomial with probability density function</p>
+<pre class="r"><code>library(&quot;MASS&quot;)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;MASS&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:wooldridge&#39;:
+## 
+##     cement</code></pre>
+<pre class="r"><code>rd_nb &lt;- glm.nb(trips ~ ., data = RecreationDemand)
+coeftest(rd_nb)</code></pre>
+<pre><code>## 
+## z test of coefficients:
+## 
+##               Estimate Std. Error  z value  Pr(&gt;|z|)    
+## (Intercept) -1.1219363  0.2143029  -5.2353 1.647e-07 ***
+## quality      0.7219990  0.0401165  17.9976 &lt; 2.2e-16 ***
+## skiyes       0.6121388  0.1503029   4.0727 4.647e-05 ***
+## income      -0.0260588  0.0424527  -0.6138   0.53933    
+## userfeeyes   0.6691676  0.3530211   1.8955   0.05802 .  
+## costC        0.0480087  0.0091848   5.2270 1.723e-07 ***
+## costS       -0.0926910  0.0066534 -13.9314 &lt; 2.2e-16 ***
+## costH        0.0388357  0.0077505   5.0107 5.423e-07 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+<div id="zero-inflated-poisson-and-negative-binomial-models" class="section level2">
+<h2>Zero-Inflated Poisson and negative binomial models</h2>
+<p>Typical problem with count data is that it have too many zeros : RecreationDemand example has 63.28% zeros and the Poisson regression provides only 41.96%.We can plot marginal distribution of response:</p>
+<pre class="r"><code>plot(table(RecreationDemand$trips),ylab=&quot;&quot;)</code></pre>
+<p><img src="course_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+<p>Zero-inflated Poisson (ZIP) model (Mullahy 1986, Lambert 1992) for recreational trips give the following :</p>
+<pre class="r"><code>library(&quot;pscl&quot;)</code></pre>
+<pre><code>## Classes and Methods for R developed in the
+## Political Science Computational Laboratory
+## Department of Political Science
+## Stanford University
+## Simon Jackman
+## hurdle and zeroinfl functions by Achim Zeileis</code></pre>
+<pre class="r"><code>rd_zinb &lt;- zeroinfl(trips ~ . | quality + income, data = RecreationDemand, dist = &quot;negbin&quot;)
+summary(rd_zinb)</code></pre>
+<pre><code>## 
+## Call:
+## zeroinfl(formula = trips ~ . | quality + income, data = RecreationDemand, 
+##     dist = &quot;negbin&quot;)
+## 
+## Pearson residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.08868 -0.20032 -0.05687 -0.04525 39.95749 
+## 
+## Count model coefficients (negbin with log link):
+##              Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  1.096094   0.257075   4.264 2.01e-05 ***
+## quality      0.169019   0.053135   3.181 0.001468 ** 
+## skiyes       0.500479   0.134496   3.721 0.000198 ***
+## income      -0.069203   0.043802  -1.580 0.114130    
+## userfeeyes   0.542557   0.282819   1.918 0.055062 .  
+## costC        0.040427   0.014522   2.784 0.005372 ** 
+## costS       -0.066202   0.007746  -8.547  &lt; 2e-16 ***
+## costH        0.020609   0.010235   2.014 0.044061 *  
+## Log(theta)   0.189859   0.113134   1.678 0.093312 .  
+## 
+## Zero-inflation model coefficients (binomial with logit link):
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)   5.7184     1.5596   3.667 0.000246 ***
+## quality      -8.3596     3.9380  -2.123 0.033768 *  
+## income       -0.2516     0.2847  -0.884 0.376832    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1 
+## 
+## Theta = 1.2091 
+## Number of iterations in BFGS optimization: 26 
+## Log-likelihood:  -722 on 12 Df</code></pre>
+</div>
+<div id="censored-dependent-variables-tobit-models" class="section level2">
+<h2>Censored Dependent Variables : Tobit Models</h2>
+<p>Censored regression models are a class of models in which the dependent variable is censored above or below a certain threshold. A commonly used likelihood-based model to accommodate to a censored sample is the Tobit model, but quantile and nonparametric estimators have also been developed. These and other censored regression models are often confused with truncated regression models. Truncated regression models are used for data where whole observations are missing so that the values for the dependent and the independent variables are unknown. Censored regression models are used for data where only the value for the dependent variable is unknown while the values of the independent variables are still available.</p>
+<p>We use the survival package (Therneau and Grambsch 2000) to fit censored regression model and the “Fair’s affairs” (Fair, JPE 1978) dataset, a survey on extramarital affairs conducted by Psychology Today (1969) and dependent variable is affairs (number of extramarital affairs during past year), regressors are notably gender, age…</p>
+<pre class="r"><code>data(&quot;Affairs&quot;)
+aff_tob &lt;- tobit(affairs ~ age + yearsmarried +
+  religiousness + occupation + rating, data = Affairs)
+summary(aff_tob)</code></pre>
+<pre><code>## 
+## Call:
+## tobit(formula = affairs ~ age + yearsmarried + religiousness + 
+##     occupation + rating, data = Affairs)
+## 
+## Observations:
+##          Total  Left-censored     Uncensored Right-censored 
+##            601            451            150              0 
+## 
+## Coefficients:
+##               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)    8.17420    2.74145   2.982  0.00287 ** 
+## age           -0.17933    0.07909  -2.267  0.02337 *  
+## yearsmarried   0.55414    0.13452   4.119 3.80e-05 ***
+## religiousness -1.68622    0.40375  -4.176 2.96e-05 ***
+## occupation     0.32605    0.25442   1.282  0.20001    
+## rating        -2.28497    0.40783  -5.603 2.11e-08 ***
+## Log(scale)     2.10986    0.06710  31.444  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Scale: 8.247 
+## 
+## Gaussian distribution
+## Number of Newton-Raphson Iterations: 4 
+## Log-likelihood: -705.6 on 7 Df
+## Wald-statistic: 67.71 on 5 Df, p-value: 3.0718e-13</code></pre>
+</div>
+</div>
+<div id="time-series" class="section level1">
+<h1>Time Series</h1>
+<div id="infrastructure-and-naive-methods" class="section level2">
+<h2>Infrastructure and “Naive” Methods</h2>
+<p>Standard time series class in R is “ts” and aimed at regulat series such as annual, quaterly, monthly.</p>
+<p>We take the example of the quaterly consumption of non-durables in the United Kingdom (Franses 1998)</p>
+<pre class="r"><code>data(&quot;UKNonDurables&quot;)
+plot(UKNonDurables)</code></pre>
+<p><img src="course_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
+<p>We can set time series properties and subsets observations.</p>
+<pre class="r"><code>tsp(UKNonDurables)</code></pre>
+<pre><code>## [1] 1955.00 1988.75    4.00</code></pre>
+<pre class="r"><code>window(UKNonDurables,end=c(1956,4))</code></pre>
+<pre><code>##       Qtr1  Qtr2  Qtr3  Qtr4
+## 1955 24030 25620 26209 27167
+## 1956 24620 25972 26285 27659</code></pre>
+<p>If you deal with irregular series, you might need to use other package such as the zoo Generalization of “ts”: time stamps of arbitrary type. Numeric vectors or matrices, “index” attribute contains vector of time stamps (not just “tsp” attribute!). Regular series can be coerced back and forth between “ts” and “zoo” via as.zoo() and as.ts(). “zoo” more convenient for daily data (e.g., “Date” time stamps) or intraday data (e.g., “POSIXct” or “chron” time stamps). More details: Zeileis and Grothendieck (JSS 2005).</p>
+<div id="linear-filtering" class="section level3">
+<h3>Linear filtering</h3>
+<p>Finite moving averages is the most important one. You can implemente it with the filter() function in R. Applied to the UKDriverDeaths database (Harvey and Durbin, JRSS A 1986), we obtain the following.</p>
+<pre class="r"><code>data(&quot;UKDriverDeaths&quot;)
+plot(UKDriverDeaths)
+lines(filter(UKDriverDeaths, c(1/2, rep(1, 11), 1/2)/12),
+  col = 2)</code></pre>
+<p><img src="course_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
+</div>
+<div id="decomposition-into-seasonal-trend-and-irregular-components" class="section level3">
+<h3>Decomposition into seasonal, trend and irregular components</h3>
+<p>In R, decompose() takes simple symmetric filter for extracting trend,derives seasonal component by averaging trend-adjusted observations from corresponding periods. stl() iteratively finds seasonal and trend components by loess smoothing in moving data windows.</p>
+<pre class="r"><code>dd_dec &lt;- decompose(log(UKDriverDeaths))
+dd_stl &lt;- stl(log(UKDriverDeaths), s.window = 13)</code></pre>
+</div>
+</div>
+<div id="classical-model-based-analysis" class="section level2">
+<h2>Classical Model-Based Analysis</h2>
+<p>We follow the Box-Jenkins approach for preliminary analysis. HERE I NEED TO PUT SOMETHING MORE</p>
+</div>
+<div id="stationarity-unit-roots-and-cointegration-test" class="section level2">
+<h2>Stationarity, unit roots, and cointegration test</h2>
+<p>Many time series in macroeconomics and finance are nonstationary.With use the example from Franses 1998 which is a bivariate time series of average monthly European spot prices for black and white pepper (in US dollars per ton).</p>
+<pre class="r"><code>data(&quot;PepperPrice&quot;)
+plot(PepperPrice, plot.type = &quot;single&quot;, col = 1:2)
+legend(&quot;topleft&quot;, c(&quot;black&quot;, &quot;white&quot;), bty = &quot;n&quot;,
+ col = 1:2, lty = rep(1,2))</code></pre>
+<p><img src="course_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
+<div id="unit-root-test" class="section level3">
+<h3>Unit-root test</h3>
+<p>The augmented Dickey-Fuller (ADF) test can be done as follow :</p>
+<pre class="r"><code>library(tseries)</code></pre>
+<pre><code>## Registered S3 method overwritten by &#39;quantmod&#39;:
+##   method            from
+##   as.zoo.data.frame zoo</code></pre>
+<pre class="r"><code>adf.test(log(PepperPrice[,&quot;white&quot;]))</code></pre>
+<pre><code>## 
+##  Augmented Dickey-Fuller Test
+## 
+## data:  log(PepperPrice[, &quot;white&quot;])
+## Dickey-Fuller = -1.744, Lag order = 6, p-value = 0.6838
+## alternative hypothesis: stationary</code></pre>
+</div>
+<div id="stationarity-test" class="section level3">
+<h3>stationarity test</h3>
+<p>Kwiatkowski, Phillips, Schmidt and Shin (J. Econometrics 1992) create a test with two variants, one with a level stationnarity and the other one with a tredn stationnarity.</p>
+<pre class="r"><code>library(tseries)
+kpss.test(log(PepperPrice[,&quot;white&quot;]))</code></pre>
+<pre><code>## 
+##  KPSS Test for Level Stationarity
+## 
+## data:  log(PepperPrice[, &quot;white&quot;])
+## KPSS Level = 0.61733, Truncation lag parameter = 5, p-value = 0.02106</code></pre>
+</div>
+<div id="cointegration-test" class="section level3">
+<h3>cointegration test</h3>
+<p>Engle-Granger two-step method Available in po.test() from tseries (named after Phillips and Ouliaris, Econometrica 1990).</p>
+<pre class="r"><code>po.test(log(PepperPrice))</code></pre>
+<pre><code>## 
+##  Phillips-Ouliaris Cointegration Test
+## 
+## data:  log(PepperPrice)
+## Phillips-Ouliaris demeaned = -24.099, Truncation lag parameter = 2,
+## p-value = 0.02404</code></pre>
+<p>if the p-value is lower thant 5%, it suggests that both series are cointegrated.</p>
+</div>
+</div>
+<div id="time-series-regression-and-structural-change" class="section level2">
+<h2>Time series regression and structural change</h2>
+<div id="fitting-dynamic-regression-models" class="section level3">
+<h3>Fitting dynamic regression models</h3>
+<pre class="r"><code>library(dynlm)
+dd &lt;- log(UKDriverDeaths)
+dynlm(dd ~ L(dd) + L(dd, 12))</code></pre>
+<pre><code>## 
+## Time series regression with &quot;ts&quot; data:
+## Start = 1970(1), End = 1984(12)
+## 
+## Call:
+## dynlm(formula = dd ~ L(dd) + L(dd, 12))
+## 
+## Coefficients:
+## (Intercept)        L(dd)    L(dd, 12)  
+##      0.4205       0.4310       0.5112</code></pre>
+</div>
+</div>
+</div>
+<div id="support-vector-regression-svr" class="section level1">
+<h1>Support Vector Regression (SVR)</h1>
+<div id="we-use-the-reading-skills-database-from-the-party-package" class="section level2">
+<h2>We use the reading skills database from the party package</h2>
+<pre class="r"><code>library(party)</code></pre>
+<pre><code>## Loading required package: grid</code></pre>
+<pre><code>## Loading required package: mvtnorm</code></pre>
+<pre><code>## Loading required package: modeltools</code></pre>
+<pre><code>## Loading required package: stats4</code></pre>
+<pre><code>## 
+## Attaching package: &#39;modeltools&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:car&#39;:
+## 
+##     Predict</code></pre>
+<pre><code>## Loading required package: strucchange</code></pre>
+<pre class="r"><code>print(head(readingSkills))</code></pre>
+<pre><code>##   nativeSpeaker age shoeSize    score
+## 1           yes   5 24.83189 32.29385
+## 2           yes   6 25.95238 36.63105
+## 3            no  11 30.42170 49.60593
+## 4           yes   7 28.66450 40.28456
+## 5           yes  11 31.88207 55.46085
+## 6           yes  10 30.07843 52.83124</code></pre>
+</div>
+<div id="fitting-svr-to-the-dataset" class="section level2">
+<h2>Fitting SVR to the dataset</h2>
+<pre class="r"><code>library(e1071)
+regressor = svm(formula = score ~ shoeSize,
+                data = readingSkills,
+                type = &#39;eps-regression&#39;,
+                kernel = &#39;radial&#39;)</code></pre>
+</div>
+<div id="predicting-a-new-result" class="section level2">
+<h2>Predicting a new result</h2>
+<pre class="r"><code>y_pred = predict(regressor, data.frame(shoeSize = 26))</code></pre>
+</div>
+<div id="visualising-the-svr-results" class="section level2">
+<h2>Visualising the SVR results</h2>
+<pre class="r"><code>library(ggplot2)
+x_grid = seq(min(readingSkills$shoeSize), max(readingSkills$shoeSize), 0.1)
+ggplot() +
+  geom_point(aes(x = readingSkills$shoeSize, y = readingSkills$score),
+             colour = &#39;red&#39;) +
+  geom_line(aes(x = x_grid, y = predict(regressor, newdata = data.frame(shoeSize = x_grid))),
+            colour = &#39;blue&#39;) +
+  ggtitle(&#39;Truth or Bluff (SVR)&#39;) +
+  xlab(&#39;shoeSize&#39;) +
+  ylab(&#39;score&#39;)</code></pre>
+<p><img src="course_files/figure-html/unnamed-chunk-56-1.png" width="672" /></p>
+</div>
+</div>
+<div id="decision-tree-regression" class="section level1">
+<h1>Decision Tree regression</h1>
+<div id="ames-housing-data" class="section level2">
+<h2>Ames Housing data</h2>
+<p>To illustrate various regularization concepts we will use the Ames Housing data that has been included in the AmesHousing package.</p>
+<pre class="r"><code>library(AmesHousing)
+library(rsample)
+ames_split &lt;- initial_split(AmesHousing::make_ames(), prop = .7)
+ames_train &lt;- training(ames_split)
+ames_test  &lt;- testing(ames_split)
+print(head(ames_train))</code></pre>
+<pre><code>## # A tibble: 6 x 81
+##   MS_SubClass MS_Zoning Lot_Frontage Lot_Area Street Alley Lot_Shape
+##   &lt;fct&gt;       &lt;fct&gt;            &lt;dbl&gt;    &lt;int&gt; &lt;fct&gt;  &lt;fct&gt; &lt;fct&gt;    
+## 1 One_Story_~ Resident~           80    11622 Pave   No_A~ Regular  
+## 2 One_Story_~ Resident~           81    14267 Pave   No_A~ Slightly~
+## 3 One_Story_~ Resident~           93    11160 Pave   No_A~ Regular  
+## 4 Two_Story_~ Resident~           74    13830 Pave   No_A~ Slightly~
+## 5 Two_Story_~ Resident~           78     9978 Pave   No_A~ Slightly~
+## 6 One_Story_~ Resident~           41     4920 Pave   No_A~ Regular  
+## # ... with 74 more variables: Land_Contour &lt;fct&gt;, Utilities &lt;fct&gt;,
+## #   Lot_Config &lt;fct&gt;, Land_Slope &lt;fct&gt;, Neighborhood &lt;fct&gt;, Condition_1 &lt;fct&gt;,
+## #   Condition_2 &lt;fct&gt;, Bldg_Type &lt;fct&gt;, House_Style &lt;fct&gt;, Overall_Qual &lt;fct&gt;,
+## #   Overall_Cond &lt;fct&gt;, Year_Built &lt;int&gt;, Year_Remod_Add &lt;int&gt;,
+## #   Roof_Style &lt;fct&gt;, Roof_Matl &lt;fct&gt;, Exterior_1st &lt;fct&gt;, Exterior_2nd &lt;fct&gt;,
+## #   Mas_Vnr_Type &lt;fct&gt;, Mas_Vnr_Area &lt;dbl&gt;, Exter_Qual &lt;fct&gt;, Exter_Cond &lt;fct&gt;,
+## #   Foundation &lt;fct&gt;, Bsmt_Qual &lt;fct&gt;, Bsmt_Cond &lt;fct&gt;, Bsmt_Exposure &lt;fct&gt;,
+## #   BsmtFin_Type_1 &lt;fct&gt;, BsmtFin_SF_1 &lt;dbl&gt;, BsmtFin_Type_2 &lt;fct&gt;,
+## #   BsmtFin_SF_2 &lt;dbl&gt;, Bsmt_Unf_SF &lt;dbl&gt;, Total_Bsmt_SF &lt;dbl&gt;, Heating &lt;fct&gt;,
+## #   Heating_QC &lt;fct&gt;, Central_Air &lt;fct&gt;, Electrical &lt;fct&gt;, First_Flr_SF &lt;int&gt;,
+## #   Second_Flr_SF &lt;int&gt;, Low_Qual_Fin_SF &lt;int&gt;, Gr_Liv_Area &lt;int&gt;,
+## #   Bsmt_Full_Bath &lt;dbl&gt;, Bsmt_Half_Bath &lt;dbl&gt;, Full_Bath &lt;int&gt;,
+## #   Half_Bath &lt;int&gt;, Bedroom_AbvGr &lt;int&gt;, Kitchen_AbvGr &lt;int&gt;,
+## #   Kitchen_Qual &lt;fct&gt;, TotRms_AbvGrd &lt;int&gt;, Functional &lt;fct&gt;,
+## #   Fireplaces &lt;int&gt;, Fireplace_Qu &lt;fct&gt;, Garage_Type &lt;fct&gt;,
+## #   Garage_Finish &lt;fct&gt;, Garage_Cars &lt;dbl&gt;, Garage_Area &lt;dbl&gt;,
+## #   Garage_Qual &lt;fct&gt;, Garage_Cond &lt;fct&gt;, Paved_Drive &lt;fct&gt;,
+## #   Wood_Deck_SF &lt;int&gt;, Open_Porch_SF &lt;int&gt;, Enclosed_Porch &lt;int&gt;,
+## #   Three_season_porch &lt;int&gt;, Screen_Porch &lt;int&gt;, Pool_Area &lt;int&gt;,
+## #   Pool_QC &lt;fct&gt;, Fence &lt;fct&gt;, Misc_Feature &lt;fct&gt;, Misc_Val &lt;int&gt;,
+## #   Mo_Sold &lt;int&gt;, Year_Sold &lt;int&gt;, Sale_Type &lt;fct&gt;, Sale_Condition &lt;fct&gt;,
+## #   Sale_Price &lt;int&gt;, Longitude &lt;dbl&gt;, Latitude &lt;dbl&gt;</code></pre>
+</div>
+<div id="fitting-decision-tree-regression-to-the-dataset" class="section level2">
+<h2>Fitting Decision Tree Regression to the dataset</h2>
+<pre class="r"><code>library(rpart)
+regressor = rpart(formula = Sale_Price ~ .,
+                  data = ames_train,
+                  method = &quot;anova&quot;,
+                  control = rpart.control(minsplit = 1,minbucket = 1))</code></pre>
+</div>
+<div id="plot-of-the-graph" class="section level2">
+<h2>Plot of the Graph</h2>
+<p>We can visualize our model with rpart.plot. rpart.plot has many plotting options, which we’ll leave to the reader to explore. However, in the default print it will show the percentage of data that fall to that node and the average sales price for that branch.</p>
+<pre class="r"><code>library(rattle)</code></pre>
+<pre><code>## Loading required package: tibble</code></pre>
+<pre><code>## Loading required package: bitops</code></pre>
+<pre><code>## Rattle: A free graphical interface for data science with R.
+## Version 5.4.0 Copyright (c) 2006-2020 Togaware Pty Ltd.
+## Type &#39;rattle()&#39; to shake, rattle, and roll your data.</code></pre>
+<pre><code>## 
+## Attaching package: &#39;rattle&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:wooldridge&#39;:
+## 
+##     audit, wine</code></pre>
+<pre class="r"><code>library(rpart.plot)
+library(RColorBrewer)
+rpart.plot(regressor)</code></pre>
+<p><img src="course_files/figure-html/unnamed-chunk-59-1.png" width="672" /></p>
+</div>
+</div>
+<div id="random-forest-regression" class="section level1">
+<h1>Random Forest Regression</h1>
+<div id="ames-housing-data-1" class="section level2">
+<h2>Ames Housing data</h2>
+<p>To illustrate various regularization concepts we will use the Ames Housing data that has been included in the AmesHousing package.</p>
+<pre class="r"><code>library(AmesHousing)
+library(rsample)
+ames_split &lt;- initial_split(AmesHousing::make_ames(), prop = .7)
+ames_train &lt;- training(ames_split)
+ames_test  &lt;- testing(ames_split)</code></pre>
+<p>##Train the model</p>
+<pre class="r"><code>library(randomForest)
+regressor = randomForest(Sale_Price ~.,
+                         data = ames_train,
+                         ntree = 5)
+print(regressor)</code></pre>
+<pre><code>## 
+## Call:
+##  randomForest(formula = Sale_Price ~ ., data = ames_train, ntree = 5) 
+##                Type of random forest: regression
+##                      Number of trees: 5
+## No. of variables tried at each split: 26
+## 
+##           Mean of squared residuals: 1405904742
+##                     % Var explained: 78.11</code></pre>
+</div>
+<div id="test-of-the-model" class="section level2">
+<h2>Test of the model</h2>
+<pre class="r"><code>pred_1 = predict(regressor,ames_test)</code></pre>
+<p>Variable Importance</p>
+<pre class="r"><code>varImpPlot(regressor)</code></pre>
+<p><img src="course_files/figure-html/unnamed-chunk-63-1.png" width="672" /></p>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

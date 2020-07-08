@@ -6,8 +6,10 @@ navbar:
       href: project_1.html
     - text: "API LOL"
       href: project_2.html
-    - text: "Data Cleaning"
+    - text: "Data Prepocessing"
       href: data_cleaning.html
+    - text: "Courses"
+      href: course.html
   right:
     - icon: fa-envelope fa-lg
       href: contact.html

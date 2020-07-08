@@ -1,7 +1,7 @@
 ---
-title: "Data Cleaning"
+title: "Data Proprocessing"
 output: 
-  html_document:
+    html_document:
         toc: TRUE
         toc_float: TRUE
 ---
@@ -9,13 +9,17 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+```{r klippy, echo=FALSE, include=TRUE}
+klippy::klippy(position = c('top', 'right'))
+```
 
-## Source 
+
+# Introduction 
 
 You can find the excellent article of Shilpa Arora here <https://towardsdatascience.com/dirty-data-quality-assessment-cleaning-measures-39efb90ad734>. This guide is just a summary of it.
 
 
-## Priority of check 
+# Priority of check 
 three levels:
 Level 1: Generic DQ metrics that should be checked irrespective of the type of dataset type or the use case. Few example:
 -Data Type/Schema
@@ -32,18 +36,51 @@ Level 2: Contextual checks which vary across different datasets and use cases. F
 Level 3: Comparative checks where we compare the data table with an ideal or master data table.
 -Master match/Entity Resolution- Check entities like geographic names, product names, email domains etc. against standard master files to weed out bad names and replace them with correct ones.
 
+# Preprocessing
 
+We create a dataset to illustrate the following manipulation. 
 
-```{r cars}
-summary(cars)
+```{r ,eval=TRUE, echo=T}
+dataset <- data.frame("Country" = c('France','Spain',"Germany",'Spain',"Germany",'France',"Spain",'France',"Germany","France"),
+                "Age" = c(44,27,30,38,40,35,NA,48,50,37), 
+                "Salary" = c(72000,48000,54000,61000,NA,58000,52000,79000,83000,67000),
+                'Purchased'=c('No','Yes','No','No','Yes','Yes','No','Yes','No','Yes'))
+print(dataset)
 ```
 
-## Including Plots
+## Taking care of missing data
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r ,eval=TRUE, echo=T}
+dataset$Age = ifelse(is.na(dataset$Age),
+                     ave(dataset$Age, FUN = function(x) mean(x, na.rm = TRUE)),
+                     dataset$Age)
+dataset$Salary = ifelse(is.na(dataset$Salary),
+                        ave(dataset$Salary, FUN = function(x) mean(x, na.rm = TRUE)),
+                        dataset$Salary)
+print(dataset)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## Encoding categorical data
+
+```{r ,eval=TRUE, echo=T}
+dataset$Country = factor(dataset$Country,
+                         levels = c('France', 'Spain', 'Germany'),
+                         labels = c(1, 2, 3))
+dataset$Purchased = factor(dataset$Purchased,
+                           levels = c('No', 'Yes'),
+                           labels = c(0, 1))
+print(dataset)
+```
+
+# Spliting the dataset into the Training set and Test set
+```{r ,eval=TRUE, echo=T}
+library(caTools)
+set.seed(123)
+split = sample.split(dataset$Purchased, SplitRatio = 0.8)
+training_set = subset(dataset, split == TRUE)
+test_set = subset(dataset, split == FALSE)
+print(training_set)
+print(test_set)
+```
+
+
