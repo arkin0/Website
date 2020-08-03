@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Qualitative analysis</title>
+
+<script src="site_libs/jquery-1.12.4/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/clipboard-1.7.1/clipboard.min.js"></script>
+<link href="site_libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+<link href="site_libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+<script src="site_libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
+<script src="site_libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="site_libs/datatables-binding-0.14/datatables.js"></script>
+<link href="site_libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<link href="site_libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 64px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h2 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h3 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h4 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h5 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h6 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Léo Quennesson</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="Preprocessing.html">Preprocessing</a>
+</li>
+<li>
+  <a href="data_wrangling.html">Data Wrangling</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Algorithms
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="quantitative_analysis.html">Quantitative Analysis</a>
+    </li>
+    <li>
+      <a href="qualitative_analysis.html">Qualitative Analysis</a>
+    </li>
+    <li>
+      <a href="unsupervised_learning.html">Clustering</a>
+    </li>
+    <li>
+      <a href="dimensionality_reduction.html">Dimensionality Reduction</a>
+    </li>
+    <li>
+      <a href="selection_boosting.html">Model selection and Boosting</a>
+    </li>
+    <li>
+      <a href="association_rule.html">Association Rule Learning</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="more_to_come.html">More to Come</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="contact.html">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/leoquennesson">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://www.linkedin.com/in/l%C3%A9o-quennesson-920658b7/">
+    <span class="fa fa-linkedin fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Qualitative analysis</h1>
+
+</div>
+
+
+<script>
+  addClassKlippyTo("pre.r, pre.markdown");
+  addKlippy('right', 'top', 'auto', '1', 'Copy code', 'Copied!');
+</script>
+<p>Many microeconometric models belong to the domain of generalized linear models (GLMs): probit model, Poisson regression. R has a single fitting function glm() closely resembling lm(). Because of the built-in distributional assumption, hence use method of maximym likelihood (ML).</p>
+<p>We use the training dataset to get better boundary conditions that could be used to determine each target class. Once the boundary conditions are determined, the next task is to predict the target class. The whole process is known as classification.</p>
+<p>We use the dataset from the Halloween candy dataset, it can be loaded through the fivethirtyeight dataset. The candy-data.csv includes attributes for each candy along with its ranking.</p>
+<pre class="r"><code>library(fivethirtyeight)
+candy &lt;- candy_rankings</code></pre>
+<p>Thank to Walt Hickey for making the data available. We can display values with DataTables for the five first column.</p>
+<pre class="r"><code>library(DT)
+datatable(candy[1:5], options = list(pageLength = 5))</code></pre>
+<div id="htmlwidget-f30d7598595affc4f25a" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f30d7598595affc4f25a">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85"],["100 Grand","3 Musketeers","One dime","One quarter","Air Heads","Almond Joy","Baby Ruth","Boston Baked Beans","Candy Corn","Caramel Apple Pops","Charleston Chew","Chewey Lemonhead Fruit Mix","Chiclets","Dots","Dum Dums","Fruit Chews","Fun Dip","Gobstopper","Haribo Gold Bears","Haribo Happy Cola","Haribo Sour Bears","Haribo Twin Snakes","Hershey's Kisses","Hershey's Krackel","Hershey's Milk Chocolate","Hershey's Special Dark","Jawbusters","Junior Mints","Kit Kat","Laffy Taffy","Lemonhead","Lifesavers big ring gummies","Peanut butter M&amp;M's","M&amp;M's","Mike &amp; Ike","Milk Duds","Milky Way","Milky Way Midnight","Milky Way Simply Caramel","Mounds","Mr Good Bar","Nerds","Nestle Butterfinger","Nestle Crunch","Nik L Nip","Now &amp; Later","Payday","Peanut M&amp;Ms","Pixie Sticks","Pop Rocks","Red vines","Reese's Miniatures","Reese's Peanut Butter cup","Reese's pieces","Reese's stuffed with pieces","Ring pop","Rolo","Root Beer Barrels","Runts","Sixlets","Skittles original","Skittles wildberry","Nestle Smarties","Smarties candy","Snickers","Snickers Crisper","Sour Patch Kids","Sour Patch Tricksters","Starburst","Strawberry bon bons","Sugar Babies","Sugar Daddy","Super Bubble","Swedish Fish","Tootsie Pop","Tootsie Roll Juniors","Tootsie Roll Midgies","Tootsie Roll Snack Bars","Trolli Sour Bites","Twix","Twizzlers","Warheads","Welch's Fruit Snacks","Werther's Original Caramel","Whoppers"],[true,true,false,false,false,true,true,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,true,true,true,true,false,true,true,false,false,false,true,true,false,true,true,true,true,true,true,false,true,true,false,false,false,true,false,false,false,true,true,true,true,false,true,false,false,true,false,false,true,false,true,true,false,false,false,false,false,false,false,false,true,true,true,true,false,true,false,false,false,false,true],[false,false,false,false,true,false,false,false,false,true,false,true,true,true,true,true,true,true,true,false,true,true,false,false,false,false,true,false,false,true,true,true,false,false,true,false,false,false,false,false,false,true,false,false,true,true,false,false,false,true,true,false,false,false,false,true,false,false,true,false,true,true,false,true,false,false,true,true,true,true,false,false,true,true,true,false,false,false,true,false,true,true,true,false,false],[true,false,false,false,false,false,true,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,true,true,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,true,true,false,false,false,false,true,true,false,false,false,false,false,false,false,true,false,false,false,true,false],[false,false,false,false,false,true,true,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,true,false,true,false,false,false,true,true,false,false,false,true,true,true,true,false,false,false,false,false,false,false,false,false,true,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>competitorname<\/th>\n      <th>chocolate<\/th>\n      <th>fruity<\/th>\n      <th>caramel<\/th>\n      <th>peanutyalmondy<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}],"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<p>We’ll be trying to predict if a candy is chocolaty or not based on all the other features in the dataset. A logistic regression is a great choice for this particular modeling task because the variable we’re trying to predict is either TRUE or FALSE. The logistic regression model will output a probability that we can use to make our decision.</p>
+<p>In this data, the variable chocolat is already a bolean. If you need to recode this variable or any other, please run the following code.</p>
+<p>We also delete the first variable competitorname because the name explain perfectly if the candy is chocolate or not.</p>
+<pre class="r"><code>candy$chocolate = factor(candy$chocolate, levels = c(0, 1))</code></pre>
+<pre class="r"><code>candy &lt;- candy[-1]</code></pre>
+<div id="splitting-the-dataset-into-the-training-set-and-test-set" class="section level1">
+<h1>Splitting the dataset into the Training set and Test set</h1>
+<pre class="r"><code>library(caTools)
+set.seed(123)
+split = sample.split(candy$chocolate, SplitRatio = 0.75)
+training_set = subset(candy, split == TRUE)
+test_set = subset(candy, split == FALSE)</code></pre>
+</div>
+<div id="logistic-regression" class="section level1">
+<h1>Logistic Regression</h1>
+<div id="fitting-logistic-regression-to-the-training-set" class="section level2">
+<h2>Fitting Logistic Regression to the Training set</h2>
+<pre class="r"><code>classifier = glm(formula = chocolate ~ .,
+                 family = binomial,
+                 data = training_set)</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre class="r"><code>summary(classifier)</code></pre>
+<pre><code>## 
+## Call:
+## glm(formula = chocolate ~ ., family = binomial, data = training_set)
+## 
+## Deviance Residuals: 
+##      Min        1Q    Median        3Q       Max  
+## -1.52517   0.00000   0.00000   0.01209   1.68356  
+## 
+## Coefficients:
+##                        Estimate Std. Error z value Pr(&gt;|z|)  
+## (Intercept)            -14.5956     8.6702  -1.683   0.0923 .
+## fruityTRUE             -28.1609  6629.5699  -0.004   0.9966  
+## caramelTRUE              0.3882     2.7224   0.143   0.8866  
+## peanutyalmondyTRUE      -1.7586    10.1077  -0.174   0.8619  
+## nougatTRUE             -21.0414 13501.5767  -0.002   0.9988  
+## crispedricewaferTRUE    17.3523 18155.6747   0.001   0.9992  
+## hardTRUE               -18.6568 11084.9460  -0.002   0.9987  
+## barTRUE                 20.9094 13501.5774   0.002   0.9988  
+## pluribusTRUE             2.8742     2.3581   1.219   0.2229  
+## sugarpercent            -2.3620     3.3596  -0.703   0.4820  
+## pricepercent             1.6495     2.8887   0.571   0.5680  
+## winpercent               0.3159     0.1863   1.696   0.0899 .
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 87.72  on 63  degrees of freedom
+## Residual deviance: 11.76  on 52  degrees of freedom
+## AIC: 35.76
+## 
+## Number of Fisher Scoring iterations: 21</code></pre>
+</div>
+<div id="predicting-the-test-set-and-training-set-results" class="section level2">
+<h2>Predicting the Test set and Training set results</h2>
+<pre class="r"><code>prob_pred = predict(classifier, type = &#39;response&#39;, newdata = test_set)
+y_pred = ifelse(prob_pred &gt; 0.5, 1, 0)</code></pre>
+</div>
+<div id="making-the-confusion-matrix" class="section level2">
+<h2>Making the Confusion Matrix</h2>
+<pre class="r"><code>cm = table(test_set$chocolate, y_pred &gt;0.5)
+print(cm)</code></pre>
+<pre><code>##        
+##         FALSE TRUE
+##   FALSE    12    0
+##   TRUE      2    7</code></pre>
+</div>
+<div id="visualising-the-training-set-results" class="section level2">
+<h2>Visualising the Training set results</h2>
+<p>We decide first what variable we want on our x-axis. That’s the only variable we’ll enter as a whole range. (The range we set here will determine the range on the x-axis of the final plot, by the way.) We can take inspiration from : <a href="https://cran.r-project.org/web/packages/ggiraphExtra/vignettes/ggPredict.html" class="uri">https://cran.r-project.org/web/packages/ggiraphExtra/vignettes/ggPredict.html</a>.</p>
+</div>
+</div>
+<div id="k-nearest-neighborst-k-nn" class="section level1">
+<h1>K-Nearest Neighborst (K-NN)</h1>
+<div id="fitting-k-nearest-neighborst-k-nn-to-the-training-set" class="section level2">
+<h2>Fitting K-Nearest Neighborst (K-NN) to the Training set</h2>
+<pre class="r"><code>library(class)
+y_pred = knn(train = training_set,
+             test = test_set,
+             cl = training_set$chocolate,
+             k = 5,
+             prob = TRUE)</code></pre>
+</div>
+<div id="making-the-confusion-matrix-1" class="section level2">
+<h2>Making the Confusion Matrix</h2>
+<pre class="r"><code>cm = table(test_set$chocolate, y_pred)
+print(cm)</code></pre>
+<pre><code>##        y_pred
+##         FALSE TRUE
+##   FALSE    10    2
+##   TRUE      1    8</code></pre>
+</div>
+</div>
+<div id="support-vector-machine-svm" class="section level1">
+<h1>Support Vector Machine (SVM)</h1>
+<div id="fitting-support-vector-machine-svm-to-the-training-set" class="section level2">
+<h2>Fitting Support Vector Machine (SVM) to the Training set</h2>
+<pre class="r"><code>library(e1071)
+classifier = svm(formula = chocolate ~ .,
+                 data = training_set,
+                 type = &#39;C-classification&#39;,
+                 kernel = &#39;linear&#39;)</code></pre>
+</div>
+<div id="predicting-the-test-set-results" class="section level2">
+<h2>Predicting the Test set results</h2>
+<pre class="r"><code>y_pred = predict(classifier, newdata = test_set)</code></pre>
+</div>
+<div id="making-the-confusion-matrix-2" class="section level2">
+<h2>Making the Confusion Matrix</h2>
+<pre class="r"><code>cm = table(test_set$chocolate, y_pred)
+print(cm)</code></pre>
+<pre><code>##        y_pred
+##         FALSE TRUE
+##   FALSE    12    0
+##   TRUE      2    7</code></pre>
+</div>
+</div>
+<div id="kernel-svm" class="section level1">
+<h1>Kernel SVM</h1>
+<p>We do exactly the same as the SVM model, changing the kernel</p>
+<pre class="r"><code>library(e1071)
+classifier = svm(formula = chocolate ~ .,
+                 data = training_set,
+                 type = &#39;C-classification&#39;,
+                 kernel = &#39;radial&#39;)
+y_pred = predict(classifier, newdata = test_set)
+cm = table(test_set$chocolate, y_pred)
+print(cm)</code></pre>
+<pre><code>##        y_pred
+##         FALSE TRUE
+##   FALSE    12    0
+##   TRUE      2    7</code></pre>
+</div>
+<div id="naive-bayes" class="section level1">
+<h1>Naive Bayes</h1>
+<div id="fitting-naive-bayes-to-the-training-set" class="section level2">
+<h2>Fitting Naive Bayes to the Training set</h2>
+<pre class="r"><code>library(e1071)
+classifier = naiveBayes(x = training_set,
+                        y = training_set$chocolate)</code></pre>
+</div>
+<div id="predicting-the-test-set-results-1" class="section level2">
+<h2>Predicting the Test set results</h2>
+<pre class="r"><code>y_pred = predict(classifier, newdata = test_set)</code></pre>
+</div>
+<div id="making-the-confusion-matrix-3" class="section level2">
+<h2>Making the Confusion Matrix</h2>
+<pre class="r"><code>cm = table(test_set$chocolate, y_pred)
+print(cm)</code></pre>
+<pre><code>##        y_pred
+##         FALSE TRUE
+##   FALSE    12    0
+##   TRUE      1    8</code></pre>
+</div>
+</div>
+<div id="decision-tree-classification" class="section level1">
+<h1>Decision Tree Classification</h1>
+<div id="fitting-decision-tree-classifications-to-the-training-set" class="section level2">
+<h2>Fitting Decision Tree Classifications to the Training set</h2>
+<pre class="r"><code>library(rpart)
+classifier = rpart(formula = chocolate ~ .,
+                   data = training_set)</code></pre>
+</div>
+<div id="predicting-the-test-set-results-2" class="section level2">
+<h2>Predicting the Test set results</h2>
+<pre class="r"><code>y_pred = predict(classifier, newdata = test_set, type = &#39;vector&#39;)</code></pre>
+</div>
+<div id="making-the-confusion-matrix-4" class="section level2">
+<h2>Making the Confusion Matrix</h2>
+<pre class="r"><code>cm = table(test_set$chocolate, y_pred&gt;0.5)
+print(cm)</code></pre>
+<pre><code>##        
+##         FALSE TRUE
+##   FALSE    12    0
+##   TRUE      2    7</code></pre>
+</div>
+<div id="plotting-the-tree" class="section level2">
+<h2>Plotting the tree</h2>
+<pre class="r"><code>plot(classifier)
+text(classifier)</code></pre>
+<p><img src="qualitative_analysis_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+</div>
+</div>
+<div id="random-forest-classification" class="section level1">
+<h1>Random Forest Classification</h1>
+<div id="fitting-random-forest-classification-to-the-training-set" class="section level2">
+<h2>Fitting Random Forest Classification to the Training set</h2>
+<pre class="r"><code>library(randomForest)
+set.seed(123)
+classifier = randomForest(formula= chocolate~ . ,
+                          data=candy,
+                          ntree = 500)</code></pre>
+<pre><code>## Warning in randomForest.default(m, y, ...): The response has five or fewer
+## unique values. Are you sure you want to do regression?</code></pre>
+</div>
+<div id="predicting-the-test-set-results-3" class="section level2">
+<h2>Predicting the Test set results</h2>
+<pre class="r"><code>y_pred = predict(classifier, newdata = test_set)</code></pre>
+</div>
+<div id="making-the-confusion-matrix-5" class="section level2">
+<h2>Making the Confusion Matrix</h2>
+<pre class="r"><code>cm = table(test_set$chocolate, y_pred&gt;0.5)
+print(cm)</code></pre>
+<pre><code>##        
+##         FALSE TRUE
+##   FALSE    12    0
+##   TRUE      1    8</code></pre>
+</div>
+<div id="plotting-the-tree-1" class="section level2">
+<h2>Plotting the tree</h2>
+<pre class="r"><code>plot(classifier)</code></pre>
+<p><img src="qualitative_analysis_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+</div>
+</div>
+<div id="binary-dependent-variables-probit-and-logit-model" class="section level1">
+<h1>Binary Dependent Variables : Probit and Logit model</h1>
+<p>A standard normal distribution yields to a probit model whereas a logistic distribution yields to a logit model.</p>
+<p>We take the example of the Female labor force participation for 872 women from Switzerland (Gerfin, JAE 1996).</p>
+<div id="regression" class="section level2">
+<h2>Regression</h2>
+<p>The dependent variable is participation and regressors are income, nonlabor income (in logs) education, years of formal education, age, age in decades, numbers of younger / older children foreign and factor indicating citizenship.</p>
+<pre class="r"><code>data(&quot;SwissLabor&quot;, package = &quot;AER&quot;)
+swiss_probit &lt;- glm(participation ~ . + I(age^2),
+  data = SwissLabor, family = binomial(link = &quot;probit&quot;))
+summary(swiss_probit)</code></pre>
+<pre><code>## 
+## Call:
+## glm(formula = participation ~ . + I(age^2), family = binomial(link = &quot;probit&quot;), 
+##     data = SwissLabor)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.9191  -0.9695  -0.4792   1.0209   2.4803  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  3.74909    1.40695   2.665  0.00771 ** 
+## income      -0.66694    0.13196  -5.054 4.33e-07 ***
+## age          2.07530    0.40544   5.119 3.08e-07 ***
+## education    0.01920    0.01793   1.071  0.28428    
+## youngkids   -0.71449    0.10039  -7.117 1.10e-12 ***
+## oldkids     -0.14698    0.05089  -2.888  0.00387 ** 
+## foreignyes   0.71437    0.12133   5.888 3.92e-09 ***
+## I(age^2)    -0.29434    0.04995  -5.893 3.79e-09 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 1203.2  on 871  degrees of freedom
+## Residual deviance: 1017.2  on 864  degrees of freedom
+## AIC: 1033.2
+## 
+## Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+<div id="visualization" class="section level2">
+<h2>Visualization</h2>
+<p>Produces spine plot for resulting proportions of participation within age groups</p>
+<pre class="r"><code>plot(participation ~ age, data = SwissLabor, ylevels = 2:1)</code></pre>
+<p><img src="qualitative_analysis_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+</div>
+<div id="effect" class="section level2">
+<h2>Effect</h2>
+<p>In linear models, the interpretation of model parameters is linear. The effects in probit model vary with regressors.</p>
+<p>You need additional step to display the average of sample marginal effect :</p>
+<pre class="r"><code>fav &lt;- mean(dnorm(predict(swiss_probit, type = &quot;link&quot;)))
+fav * coef(swiss_probit)</code></pre>
+<pre><code>##  (Intercept)       income          age    education    youngkids      oldkids 
+##  1.241929965 -0.220931858  0.687466185  0.006358743 -0.236682273 -0.048690170 
+##   foreignyes     I(age^2) 
+##  0.236644422 -0.097504844</code></pre>
+</div>
+<div id="goodness-of-fit-and-prediction" class="section level2">
+<h2>Goodness of fit and prediction</h2>
+<p>We can display the confusion matrix</p>
+<pre class="r"><code> table(true = SwissLabor$participation, pred = round(fitted(swiss_probit)))</code></pre>
+<pre><code>##      pred
+## true    0   1
+##   no  337 134
+##   yes 146 255</code></pre>
+<p>Confusion matrix uses arbitrarily chosen cutoff 0.5 for predicted probabilities. To avoid choosing particular cutoff, we can use the package ROCR that evaluates performance for every conceivable cutoff; e.g., using accuracy of the model – proportion of correctly classified observations.</p>
+<pre class="r"><code>library(ROCR)
+pred &lt;- prediction(fitted(swiss_probit),
+  SwissLabor$participation)
+plot(performance(pred, &quot;acc&quot;))</code></pre>
+<p><img src="qualitative_analysis_files/figure-html/unnamed-chunk-30-1.png" width="672" /> Here we see that 0.5 seems to be OK.</p>
+<p>The receiver operating characteristic (ROC) allows also to display true positive rate against false positive rate.</p>
+<pre class="r"><code>plot(performance(pred, &quot;tpr&quot;, &quot;fpr&quot;))
+abline(0, 1, lty = 2)</code></pre>
+<p><img src="qualitative_analysis_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+</div>
+</div>
+<div id="regression-models-for-count-data-poisson-models" class="section level1">
+<h1>Regression Models for Count data : Poisson Models</h1>
+<p>We use the RecreationDemand data that regress the number of recreational boating trips to Lake Somerville, TX, in 1980 on divers explicatives variables.</p>
+<pre class="r"><code>library(AER)
+data(&quot;RecreationDemand&quot;)
+rd_pois &lt;- glm(trips ~ ., data = RecreationDemand,
+  family = poisson)
+summary(rd_pois)</code></pre>
+<pre><code>## 
+## Call:
+## glm(formula = trips ~ ., family = poisson, data = RecreationDemand)
+## 
+## Deviance Residuals: 
+##      Min        1Q    Median        3Q       Max  
+## -11.8465   -1.1411   -0.8896   -0.4780   18.6071  
+## 
+## Coefficients:
+##              Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  0.264993   0.093722   2.827  0.00469 ** 
+## quality      0.471726   0.017091  27.602  &lt; 2e-16 ***
+## skiyes       0.418214   0.057190   7.313 2.62e-13 ***
+## income      -0.111323   0.019588  -5.683 1.32e-08 ***
+## userfeeyes   0.898165   0.078985  11.371  &lt; 2e-16 ***
+## costC       -0.003430   0.003118  -1.100  0.27131    
+## costS       -0.042536   0.001670 -25.467  &lt; 2e-16 ***
+## costH        0.036134   0.002710  13.335  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for poisson family taken to be 1)
+## 
+##     Null deviance: 4849.7  on 658  degrees of freedom
+## Residual deviance: 2305.8  on 651  degrees of freedom
+## AIC: 3074.9
+## 
+## Number of Fisher Scoring iterations: 7</code></pre>
+<div id="dealing-with-overdispersion" class="section level2">
+<h2>Dealing with overdispersion</h2>
+<p>The Poisson model assumes equal mean and variance. If the variance is larger than the mean, we talk about overdispersion. Test goes as follow (Cameron and Trivedi 1990) :</p>
+<pre class="r"><code>dispersiontest(rd_pois)</code></pre>
+<pre><code>## 
+##  Overdispersion test
+## 
+## data:  rd_pois
+## z = 2.4116, p-value = 0.007941
+## alternative hypothesis: true dispersion is greater than 1
+## sample estimates:
+## dispersion 
+##     6.5658</code></pre>
+<p>If that doesn’t hold, like here,then the Poisson model isn’t correct. Quasi-poisson is one possibility when there is overdispersion.</p>
+<pre class="r"><code>rd_qpois &lt;- glm(trips ~ ., data = RecreationDemand,family = quasipoisson)</code></pre>
+<p>More flexible distribution is negative binomial with probability density function</p>
+<pre class="r"><code>library(&quot;MASS&quot;)
+rd_nb &lt;- glm.nb(trips ~ ., data = RecreationDemand)
+coeftest(rd_nb)</code></pre>
+<pre><code>## 
+## z test of coefficients:
+## 
+##               Estimate Std. Error  z value  Pr(&gt;|z|)    
+## (Intercept) -1.1219363  0.2143029  -5.2353 1.647e-07 ***
+## quality      0.7219990  0.0401165  17.9976 &lt; 2.2e-16 ***
+## skiyes       0.6121388  0.1503029   4.0727 4.647e-05 ***
+## income      -0.0260588  0.0424527  -0.6138   0.53933    
+## userfeeyes   0.6691676  0.3530211   1.8955   0.05802 .  
+## costC        0.0480087  0.0091848   5.2270 1.723e-07 ***
+## costS       -0.0926910  0.0066534 -13.9314 &lt; 2.2e-16 ***
+## costH        0.0388357  0.0077505   5.0107 5.423e-07 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+</div>
+<div id="zero-inflated-poisson-and-negative-binomial-models" class="section level1">
+<h1>Zero-Inflated Poisson and negative binomial models</h1>
+<p>Typical problem with count data is that it have too many zeros : RecreationDemand example has 63.28% zeros and the Poisson regression provides only 41.96%.We can plot marginal distribution of response:</p>
+<pre class="r"><code>plot(table(RecreationDemand$trips),ylab=&quot;&quot;)</code></pre>
+<p><img src="qualitative_analysis_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+<p>Zero-inflated Poisson (ZIP) model (Mullahy 1986, Lambert 1992) for recreational trips give the following :</p>
+<pre class="r"><code>library(&quot;pscl&quot;)
+rd_zinb &lt;- zeroinfl(trips ~ . | quality + income, data = RecreationDemand, dist = &quot;negbin&quot;)
+summary(rd_zinb)</code></pre>
+<pre><code>## 
+## Call:
+## zeroinfl(formula = trips ~ . | quality + income, data = RecreationDemand, 
+##     dist = &quot;negbin&quot;)
+## 
+## Pearson residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.08868 -0.20032 -0.05687 -0.04525 39.95749 
+## 
+## Count model coefficients (negbin with log link):
+##              Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  1.096094   0.257075   4.264 2.01e-05 ***
+## quality      0.169019   0.053135   3.181 0.001468 ** 
+## skiyes       0.500479   0.134496   3.721 0.000198 ***
+## income      -0.069203   0.043802  -1.580 0.114130    
+## userfeeyes   0.542557   0.282819   1.918 0.055062 .  
+## costC        0.040427   0.014522   2.784 0.005372 ** 
+## costS       -0.066202   0.007746  -8.547  &lt; 2e-16 ***
+## costH        0.020609   0.010235   2.014 0.044061 *  
+## Log(theta)   0.189859   0.113134   1.678 0.093312 .  
+## 
+## Zero-inflation model coefficients (binomial with logit link):
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)   5.7184     1.5596   3.667 0.000246 ***
+## quality      -8.3596     3.9380  -2.123 0.033768 *  
+## income       -0.2516     0.2847  -0.884 0.376832    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1 
+## 
+## Theta = 1.2091 
+## Number of iterations in BFGS optimization: 26 
+## Log-likelihood:  -722 on 12 Df</code></pre>
+</div>
+<div id="censored-dependent-variables-tobit-models" class="section level1">
+<h1>Censored Dependent Variables : Tobit Models</h1>
+<p>Censored regression models are a class of models in which the dependent variable is censored above or below a certain threshold. A commonly used likelihood-based model to accommodate to a censored sample is the Tobit model, but quantile and nonparametric estimators have also been developed. These and other censored regression models are often confused with truncated regression models. Truncated regression models are used for data where whole observations are missing so that the values for the dependent and the independent variables are unknown. Censored regression models are used for data where only the value for the dependent variable is unknown while the values of the independent variables are still available.</p>
+<p>We use the survival package (Therneau and Grambsch 2000) to fit censored regression model and the “Fair’s affairs” (Fair, JPE 1978) dataset, a survey on extramarital affairs conducted by Psychology Today (1969) and dependent variable is affairs (number of extramarital affairs during past year), regressors are notably gender, age…</p>
+<pre class="r"><code>data(&quot;Affairs&quot;)
+aff_tob &lt;- tobit(affairs ~ age + yearsmarried +
+  religiousness + occupation + rating, data = Affairs)
+summary(aff_tob)</code></pre>
+<pre><code>## 
+## Call:
+## tobit(formula = affairs ~ age + yearsmarried + religiousness + 
+##     occupation + rating, data = Affairs)
+## 
+## Observations:
+##          Total  Left-censored     Uncensored Right-censored 
+##            601            451            150              0 
+## 
+## Coefficients:
+##               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)    8.17420    2.74145   2.982  0.00287 ** 
+## age           -0.17933    0.07909  -2.267  0.02337 *  
+## yearsmarried   0.55414    0.13452   4.119 3.80e-05 ***
+## religiousness -1.68622    0.40375  -4.176 2.96e-05 ***
+## occupation     0.32605    0.25442   1.282  0.20001    
+## rating        -2.28497    0.40783  -5.603 2.11e-08 ***
+## Log(scale)     2.10986    0.06710  31.444  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Scale: 8.247 
+## 
+## Gaussian distribution
+## Number of Newton-Raphson Iterations: 4 
+## Log-likelihood: -705.6 on 7 Df
+## Wald-statistic: 67.71 on 5 Df, p-value: 3.0718e-13</code></pre>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

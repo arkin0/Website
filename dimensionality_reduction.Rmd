@@ -1,0 +1,86 @@
+---
+title: "Dimensionality Reduction"
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r klippy, echo=FALSE, include=TRUE}
+klippy::klippy(position = c('top', 'right'))
+```
+
+Dimensionality reduction is the transformation of data from a high-dimensional space into a low-dimensional space so that the low-dimensional representation retains some meaningful properties of the original data.
+
+We will use the decathlon2 dataset from the factoextra package to illustrate those algorithms.
+
+```{r message=TRUE, , echo=TRUE}
+library(factoextra)
+data("decathlon2")
+decathlon <- decathlon2[1:23, 1:10]
+head(decathlon[, 1:6])
+```
+
+We split the dataset in a training set and test set 
+
+```{r , echo=TRUE}
+library(caTools)
+set.seed(123)
+split = sample.split(decathlon, SplitRatio = 0.8)
+training_set = subset(decathlon, split == TRUE)
+test_set = subset(decathlon, split == FALSE)
+
+```
+
+
+#  Principal Component Analysis (PCA)
+
+## Estimation of the PCA
+
+```{r , echo=TRUE}
+res.pca <- prcomp(training_set, scale = TRUE)
+```
+## Show variance explication for each dimension
+```{r , echo=TRUE}
+fviz_eig(res.pca)
+```
+First dimension explains 45 % of the variance, second 15%. 
+
+
+## How individuals are grouped 
+
+Similar individuals are grouped together
+```{r , echo=TRUE}
+fviz_pca_ind(res.pca,
+             col.ind = "cos2", # Colorer par le cos2
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE     
+             )
+```
+
+## What are our dimensions made of
+
+```{r , echo=TRUE}
+fviz_pca_var(res.pca,
+             col.var = "contrib", 
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE     
+             )
+```
+
+## Prediction of the ACP
+
+```{r , echo=TRUE}
+ind.sup.coord <- predict(res.pca, newdata = test_set)
+ind.sup.coord[, 1:4]
+```
+
+
+
+# Linear Discriminant Analysis (LDA)
+
+
+# Kernel PCA

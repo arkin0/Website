@@ -1,0 +1,74 @@
+---
+title: "Association Rule Learning"
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r klippy, echo=FALSE, include=TRUE}
+klippy::klippy(position = c('top', 'right'))
+```
+
+# Association Rule Learning
+
+Association rule learning is a rule-based machine learning method for discovering interesting relations between variables in large databases. It is intended to identify strong rules discovered in databases using some measures of interestingness.
+
+We will use an inbuilt dataset “Groceries” from the ‘arules’ package to illyustrate our analysis.
+
+```{r message=FALSE, , echo=TRUE}
+library(arules)
+data("Groceries")
+summary(Groceries)
+```
+We can also quickly visualize what are the top 10 purchased items of this list. 
+```{r , echo=TRUE}
+itemFrequencyPlot(Groceries, topN = 10)
+```
+# Apriori
+
+## Training Apriori on the dataset
+
+```{r , echo=TRUE}
+rules = apriori(data = Groceries, parameter = list(support = 0.001, confidence = 0.80))
+```
+
+
+## Visualising the results
+
+```{r , echo=TRUE}
+inspect(sort(rules, by = 'lift')[1:10])
+```
+
+The first rule shows that if we buy Liquor and Red Wine, we are very likely to buy bottled beer. We can rank the rules based on top 10 from either lift, support or confidence.
+
+
+## Graphical Representation
+
+We can use a graph to highlight the support and lifts of various items in our repository but mostly to see which product is associated with which one in the sales environment.
+
+```{r message=FALSE, warning=FALSE, , echo=TRUE}
+library(arulesViz)
+plot(rules[1:20],
+method = "graph",
+control = list(type = "items"))
+```
+# Eclat
+
+## Training Eclat on the dataset
+
+```{r , echo=TRUE}
+rules = eclat(data = Groceries, parameter = list(support = 0.001, minlen = 2))
+```
+
+
+## Visualising the results
+
+```{r , echo=TRUE}
+inspect(sort(rules, by = 'support')[1:10])
+```
+
+The support of an itemset is how many times the itemset appears in the transaction database. For example, the itemset {other vegetables,whole milk} has a support of 736 because.

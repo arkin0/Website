@@ -1,0 +1,92 @@
+---
+title: "Clustering"
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r klippy, echo=FALSE, include=TRUE}
+klippy::klippy(position = c('top', 'right'))
+```
+
+
+Clustering is a broad set of techniques for finding subgroups of observations within a data set. When we cluster observations, we want observations in the same group to be similar and observations in different groups to be dissimilar. Because there isn’t a response variable, this is an unsupervised method, which implies that it seeks to find relationships between the n observations without being trained by a response variable. Clustering allows us to identify which observations are alike, and potentially categorize them therein. K-means clustering is the simplest and the most commonly used clustering method for splitting a dataset into a set of k groups.
+
+We use to illustrate our code with the Hartigan (1975) City Crime database from Hartigan, J. A. (1975). Clustering Algorithms, John Wiley, New York.
+
+
+```{r , echo=TRUE}
+library(cluster.datasets)
+data(all.us.city.crime.1970)
+head(all.us.city.crime.1970,10)
+city_db <- all.us.city.crime.1970[-1]
+```
+
+
+
+# K-Means Clustering
+
+##We use the elbow method to find the optimal number of clusters
+
+```{r message=FALSE, , echo=TRUE}
+library(factoextra)
+fviz_nbclust(city_db, kmeans, method = "wss", k.max = 10) + theme_minimal() + ggtitle("the Elbow Method")
+```
+
+The Elbow Curve method is helpful because it shows how increasing the number of the clusters contribute separating the clusters in a meaningful way, not in a marginal way. The bend indicates that additional clusters beyond the fourth have little value.
+
+## Fitting K-Means to the dataset
+
+```{r , echo=TRUE}
+kmeans = kmeans(x = city_db, centers = 4)
+y_kmeans = kmeans$cluster
+```
+
+## Visualising the clusters
+```{r , echo=TRUE}
+library(cluster)
+clusplot(city_db,
+         y_kmeans,
+         lines = 0,
+         shade = TRUE,
+         color = TRUE,
+         labels = 2,
+         plotchar = FALSE,
+         span = TRUE,
+         main = paste('Clusters of customers'))
+```
+
+# Hierarchical Clustering
+
+Hierarchical clustering is an alternative approach to k-means clustering for identifying groups in the dataset. It does not require us to pre-specify the number of clusters to be generated as is required by the k-means approach. Furthermore, hierarchical clustering has an added advantage over K-means clustering in that it results in an attractive tree-based representation of the observations, called a dendrogram.
+
+## Using the dendrogram to find the optimal number of clusters
+
+```{r , echo=TRUE}
+dendrogram = hclust(d = dist(city_db, method = 'euclidean'), method = 'ward.D')
+plot(dendrogram,
+     main = paste('Dendrogram'))
+```
+
+## Fitting Hierarchical Clustering to the dataset
+```{r , echo=TRUE}
+hc = hclust(d = dist(city_db, method = 'euclidean'), method = 'ward.D')
+y_hc = cutree(hc, 2)
+```
+
+## Visualising the clusters
+```{r , echo=TRUE}
+library(cluster)
+clusplot(city_db,
+         y_hc,
+         lines = 0,
+         shade = TRUE,
+         color = TRUE,
+         labels= 2,
+         plotchar = FALSE,
+         span = TRUE,
+         main = paste('Clusters of customers'))
+```

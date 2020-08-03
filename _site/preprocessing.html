@@ -11,7 +11,7 @@
 
 
 
-<title>Course</title>
+<title>Preprocessing</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -419,7 +419,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Course</h1>
+<h1 class="title toc-ignore">Preprocessing</h1>
 
 </div>
 
@@ -428,6 +428,100 @@ div.tocify {
   addClassKlippyTo("pre.r, pre.markdown");
   addKlippy('right', 'top', 'auto', '1', 'Copy code', 'Copied!');
 </script>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>You can find the excellent article of Shilpa Arora here <a href="https://towardsdatascience.com/dirty-data-quality-assessment-cleaning-measures-39efb90ad734" class="uri">https://towardsdatascience.com/dirty-data-quality-assessment-cleaning-measures-39efb90ad734</a>. This guide is just a summary of it.</p>
+</div>
+<div id="priority-of-check" class="section level1">
+<h1>Priority of check</h1>
+<p>three levels: Level 1: Generic DQ metrics that should be checked irrespective of the type of dataset type or the use case. Few example: -Data Type/Schema -Missing values -Unique Primary key -Outliers -Negative values, etc. -Read more detailed Level 1 DQ metrics here.</p>
+<p>Level 2: Contextual checks which vary across different datasets and use cases. For example: -Column Relationship- Columns should follow their expected relation like, population column value cannot be less than household column value in the census data file. -Contextual data range- Based on context of the data, test for expected values or range of the values like, if data is from 2014 &amp; onwards then date can’t be before 2013.</p>
+<p>Level 3: Comparative checks where we compare the data table with an ideal or master data table. -Master match/Entity Resolution- Check entities like geographic names, product names, email domains etc. against standard master files to weed out bad names and replace them with correct ones.</p>
+</div>
+<div id="preprocessing" class="section level1">
+<h1>Preprocessing</h1>
+<p>We create a dataset to illustrate the following manipulation.</p>
+<pre class="r"><code>dataset &lt;- data.frame(&quot;Country&quot; = c(&#39;France&#39;,&#39;Spain&#39;,&quot;Germany&quot;,&#39;Spain&#39;,&quot;Germany&quot;,&#39;France&#39;,&quot;Spain&quot;,&#39;France&#39;,&quot;Germany&quot;,&quot;France&quot;),
+                &quot;Age&quot; = c(44,27,30,38,40,35,NA,48,50,37), 
+                &quot;Salary&quot; = c(72000,48000,54000,61000,NA,58000,52000,79000,83000,67000),
+                &#39;Purchased&#39;=c(&#39;No&#39;,&#39;Yes&#39;,&#39;No&#39;,&#39;No&#39;,&#39;Yes&#39;,&#39;Yes&#39;,&#39;No&#39;,&#39;Yes&#39;,&#39;No&#39;,&#39;Yes&#39;))
+print(dataset)</code></pre>
+<pre><code>##    Country Age Salary Purchased
+## 1   France  44  72000        No
+## 2    Spain  27  48000       Yes
+## 3  Germany  30  54000        No
+## 4    Spain  38  61000        No
+## 5  Germany  40     NA       Yes
+## 6   France  35  58000       Yes
+## 7    Spain  NA  52000        No
+## 8   France  48  79000       Yes
+## 9  Germany  50  83000        No
+## 10  France  37  67000       Yes</code></pre>
+<div id="taking-care-of-missing-data" class="section level2">
+<h2>Taking care of missing data</h2>
+<pre class="r"><code>dataset$Age = ifelse(is.na(dataset$Age),
+                     ave(dataset$Age, FUN = function(x) mean(x, na.rm = TRUE)),
+                     dataset$Age)
+dataset$Salary = ifelse(is.na(dataset$Salary),
+                        ave(dataset$Salary, FUN = function(x) mean(x, na.rm = TRUE)),
+                        dataset$Salary)
+print(dataset)</code></pre>
+<pre><code>##    Country      Age   Salary Purchased
+## 1   France 44.00000 72000.00        No
+## 2    Spain 27.00000 48000.00       Yes
+## 3  Germany 30.00000 54000.00        No
+## 4    Spain 38.00000 61000.00        No
+## 5  Germany 40.00000 63777.78       Yes
+## 6   France 35.00000 58000.00       Yes
+## 7    Spain 38.77778 52000.00        No
+## 8   France 48.00000 79000.00       Yes
+## 9  Germany 50.00000 83000.00        No
+## 10  France 37.00000 67000.00       Yes</code></pre>
+</div>
+<div id="encoding-categorical-data" class="section level2">
+<h2>Encoding categorical data</h2>
+<pre class="r"><code>dataset$Country = factor(dataset$Country,
+                         levels = c(&#39;France&#39;, &#39;Spain&#39;, &#39;Germany&#39;),
+                         labels = c(1, 2, 3))
+dataset$Purchased = factor(dataset$Purchased,
+                           levels = c(&#39;No&#39;, &#39;Yes&#39;),
+                           labels = c(0, 1))
+print(dataset)</code></pre>
+<pre><code>##    Country      Age   Salary Purchased
+## 1        1 44.00000 72000.00         0
+## 2        2 27.00000 48000.00         1
+## 3        3 30.00000 54000.00         0
+## 4        2 38.00000 61000.00         0
+## 5        3 40.00000 63777.78         1
+## 6        1 35.00000 58000.00         1
+## 7        2 38.77778 52000.00         0
+## 8        1 48.00000 79000.00         1
+## 9        3 50.00000 83000.00         0
+## 10       1 37.00000 67000.00         1</code></pre>
+</div>
+</div>
+<div id="spliting-the-dataset-into-the-training-set-and-test-set" class="section level1">
+<h1>Spliting the dataset into the Training set and Test set</h1>
+<pre class="r"><code>library(caTools)
+set.seed(123)
+split = sample.split(dataset$Purchased, SplitRatio = 0.8)
+training_set = subset(dataset, split == TRUE)
+test_set = subset(dataset, split == FALSE)
+print(training_set)</code></pre>
+<pre><code>##    Country      Age   Salary Purchased
+## 1        1 44.00000 72000.00         0
+## 2        2 27.00000 48000.00         1
+## 3        3 30.00000 54000.00         0
+## 4        2 38.00000 61000.00         0
+## 5        3 40.00000 63777.78         1
+## 7        2 38.77778 52000.00         0
+## 8        1 48.00000 79000.00         1
+## 10       1 37.00000 67000.00         1</code></pre>
+<pre class="r"><code>print(test_set)</code></pre>
+<pre><code>##   Country Age Salary Purchased
+## 6       1  35  58000         1
+## 9       3  50  83000         0</code></pre>
+</div>
 
 
 

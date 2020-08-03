@@ -11,7 +11,7 @@
 
 
 
-<title>Course</title>
+<title>Dimensionality Reduction</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -419,7 +419,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Course</h1>
+<h1 class="title toc-ignore">Dimensionality Reduction</h1>
 
 </div>
 
@@ -428,6 +428,74 @@ div.tocify {
   addClassKlippyTo("pre.r, pre.markdown");
   addKlippy('right', 'top', 'auto', '1', 'Copy code', 'Copied!');
 </script>
+<p>Dimensionality reduction is the transformation of data from a high-dimensional space into a low-dimensional space so that the low-dimensional representation retains some meaningful properties of the original data.</p>
+<p>We will use the decathlon2 dataset from the factoextra package to illustrate those algorithms.</p>
+<pre class="r"><code>library(factoextra)</code></pre>
+<pre><code>## Loading required package: ggplot2</code></pre>
+<pre><code>## Welcome! Want to learn more? See two factoextra-related books at https://goo.gl/ve3WBa</code></pre>
+<pre class="r"><code>data(&quot;decathlon2&quot;)
+decathlon &lt;- decathlon2[1:23, 1:10]
+head(decathlon[, 1:6])</code></pre>
+<pre><code>##           X100m Long.jump Shot.put High.jump X400m X110m.hurdle
+## SEBRLE    11.04      7.58    14.83      2.07 49.81        14.69
+## CLAY      10.76      7.40    14.26      1.86 49.37        14.05
+## BERNARD   11.02      7.23    14.25      1.92 48.93        14.99
+## YURKOV    11.34      7.09    15.19      2.10 50.42        15.31
+## ZSIVOCZKY 11.13      7.30    13.48      2.01 48.62        14.17
+## McMULLEN  10.83      7.31    13.76      2.13 49.91        14.38</code></pre>
+<p>We split the dataset in a training set and test set</p>
+<pre class="r"><code>library(caTools)
+set.seed(123)
+split = sample.split(decathlon, SplitRatio = 0.8)
+training_set = subset(decathlon, split == TRUE)
+test_set = subset(decathlon, split == FALSE)</code></pre>
+<div id="principal-component-analysis-pca" class="section level1">
+<h1>Principal Component Analysis (PCA)</h1>
+<div id="estimation-of-the-pca" class="section level2">
+<h2>Estimation of the PCA</h2>
+<pre class="r"><code>res.pca &lt;- prcomp(training_set, scale = TRUE)</code></pre>
+</div>
+<div id="show-variance-explication-for-each-dimension" class="section level2">
+<h2>Show variance explication for each dimension</h2>
+<pre class="r"><code>fviz_eig(res.pca)</code></pre>
+<p><img src="dimensionality_reduction_files/figure-html/unnamed-chunk-4-1.png" width="672" /> First dimension explains 45 % of the variance, second 15%.</p>
+</div>
+<div id="how-individuals-are-grouped" class="section level2">
+<h2>How individuals are grouped</h2>
+<p>Similar individuals are grouped together</p>
+<pre class="r"><code>fviz_pca_ind(res.pca,
+             col.ind = &quot;cos2&quot;, # Colorer par le cos2
+             gradient.cols = c(&quot;#00AFBB&quot;, &quot;#E7B800&quot;, &quot;#FC4E07&quot;),
+             repel = TRUE     
+             )</code></pre>
+<p><img src="dimensionality_reduction_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+</div>
+<div id="what-are-our-dimensions-made-of" class="section level2">
+<h2>What are our dimensions made of</h2>
+<pre class="r"><code>fviz_pca_var(res.pca,
+             col.var = &quot;contrib&quot;, 
+             gradient.cols = c(&quot;#00AFBB&quot;, &quot;#E7B800&quot;, &quot;#FC4E07&quot;),
+             repel = TRUE     
+             )</code></pre>
+<p><img src="dimensionality_reduction_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>
+<div id="prediction-of-the-acp" class="section level2">
+<h2>Prediction of the ACP</h2>
+<pre class="r"><code>ind.sup.coord &lt;- predict(res.pca, newdata = test_set)
+ind.sup.coord[, 1:4]</code></pre>
+<pre><code>##                  PC1        PC2        PC3        PC4
+## ZSIVOCZKY -0.2303648  1.9233251  1.5829833  0.4737560
+## HERNU     -1.7365873 -0.9923547 -0.1630733 -0.6513918
+## Macey      1.6146795  2.6781596 -0.4097257 -0.3656148
+## Hernu      0.1584773  1.2364023  0.2210399  1.0621044</code></pre>
+</div>
+</div>
+<div id="linear-discriminant-analysis-lda" class="section level1">
+<h1>Linear Discriminant Analysis (LDA)</h1>
+</div>
+<div id="kernel-pca" class="section level1">
+<h1>Kernel PCA</h1>
+</div>
 
 
 

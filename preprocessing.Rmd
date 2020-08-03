@@ -1,0 +1,109 @@
+---
+title: "Preprocessing"
+output: 
+    html_document:
+        toc: TRUE
+        toc_float: TRUE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r klippy, echo=FALSE, include=TRUE}
+klippy::klippy(position = c('top', 'right'))
+```
+
+# Introduction 
+
+You can find the excellent article of Shilpa Arora here <https://www.datasciencecentral.com/profiles/blogs/dirty-data-quality-assessment-amp-cleaning-measures>. This guide is just a summary of it.
+
+
+# Priority of check 
+three levels:
+Level 1: Generic DQ metrics that should be checked irrespective of the type of dataset type or the use case. Few example:
+-Data Type/Schema
+-Missing values
+-Unique Primary key
+-Outliers
+-Negative values, etc.
+-Read more detailed Level 1 DQ metrics here.
+
+Level 2: Contextual checks which vary across different datasets and use cases. For example:
+-Column Relationship- Columns should follow their expected relation like, population column value cannot be less than household column value in the census data file.
+-Contextual data range- Based on context of the data, test for expected values or range of the values like, if data is from 2014 & onwards then date can’t be before 2013.
+
+Level 3: Comparative checks where we compare the data table with an ideal or master data table.
+-Master match/Entity Resolution- Check entities like geographic names, product names, email domains etc. against standard master files to weed out bad names and replace them with correct ones.
+
+# Preprocessing
+
+We create a dataset to illustrate the following manipulation. 
+
+```{r ,eval=TRUE, echo=T}
+dataset <- data.frame("Country" = c('France','Spain',"Germany",'Spain',"Germany",'France',"Spain",'France',"Germany","France"),
+                "Age" = c(44,27,30,38,40,35,NA,48,50,37), 
+                "Salary" = c(72000,48000,54000,61000,NA,58000,52000,79000,83000,67000),
+                'Purchased'=c('No','Yes','No','No','Yes','Yes','No','Yes','No','Yes'))
+print(dataset)
+```
+
+## Taking care of missing data
+##check outliers
+check outlier values in all numeric columns. If few outliers, then drop them
+## related columns 
+create a flog column with value 0 if column statisfies else 1. Get them checked at the source by the data owner and if they can't be reolved at source and then drop these rows. 
+
+### count missing values in the columns
+drop rows where primary key is missing
+
+### take mean to replace it
+
+```{r ,eval=TRUE, echo=T}
+dataset$Age = ifelse(is.na(dataset$Age),
+                     ave(dataset$Age, FUN = function(x) mean(x, na.rm = TRUE)),
+                     dataset$Age)
+dataset$Salary = ifelse(is.na(dataset$Salary),
+                        ave(dataset$Salary, FUN = function(x) mean(x, na.rm = TRUE)),
+                        dataset$Salary)
+print(dataset)
+```
+
+## Encoding categorical data
+
+```{r ,eval=TRUE, echo=T}
+dataset$Country = factor(dataset$Country,
+                         levels = c('France', 'Spain', 'Germany'),
+                         labels = c(1, 2, 3))
+dataset$Purchased = factor(dataset$Purchased,
+                           levels = c('No', 'Yes'),
+                           labels = c(0, 1))
+print(dataset)
+```
+
+## standard column names
+We want to make sure that we don't have upper case, spaces or special charachters other than underscore in the name. 
+
+### Convert upper case to lower case
+### repalce spacial characters 
+
+## check the format of your variable
+### check date format
+### assign correct data type interger, string, boolean, date 
+## be sure to have an unique primary key 
+an unique column to identify
+### remove duplicate rows
+### outlier
+
+
+
+
+# Spliting the dataset into the Training set and Test set
+```{r ,eval=TRUE, echo=T}
+library(caTools)
+set.seed(123)
+split = sample.split(dataset$Purchased, SplitRatio = 0.8)
+training_set = subset(dataset, split == TRUE)
+test_set = subset(dataset, split == FALSE)
+print(training_set)
+print(test_set)
+```

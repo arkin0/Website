@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>More to Come</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 64px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h2 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h3 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h4 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h5 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h6 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Léo Quennesson</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="Preprocessing.html">Preprocessing</a>
+</li>
+<li>
+  <a href="data_wrangling.html">Data Wrangling</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Algorithms
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="quantitative_analysis.html">Quantitative Analysis</a>
+    </li>
+    <li>
+      <a href="qualitative_analysis.html">Qualitative Analysis</a>
+    </li>
+    <li>
+      <a href="unsupervised_learning.html">Clustering</a>
+    </li>
+    <li>
+      <a href="dimensionality_reduction.html">Dimensionality Reduction</a>
+    </li>
+    <li>
+      <a href="selection_boosting.html">Model selection and Boosting</a>
+    </li>
+    <li>
+      <a href="association_rule.html">Association Rule Learning</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="more_to_come.html">More to Come</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="contact.html">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/leoquennesson">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://www.linkedin.com/in/l%C3%A9o-quennesson-920658b7/">
+    <span class="fa fa-linkedin fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">More to Come</h1>
+
+</div>
+
+
+<div id="reinforcement-learning" class="section level1">
+<h1>Reinforcement Learning</h1>
+<div id="upper-confindence-bound-ucb" class="section level2">
+<h2>Upper confindence Bound (UCB)</h2>
+<div id="importing-the-dataset" class="section level3">
+<h3>Importing the dataset</h3>
+<pre class="r"><code>dataset = read.csv(&#39;Ads_CTR_Optimisation.csv&#39;)</code></pre>
+</div>
+<div id="implementing-ucb" class="section level3">
+<h3>Implementing UCB</h3>
+<pre class="r"><code>N = 10000
+d = 10
+ads_selected = integer(0)
+numbers_of_selections = integer(d)
+sums_of_rewards = integer(d)
+total_reward = 0
+for (n in 1:N) {
+  ad = 0
+  max_upper_bound = 0
+  for (i in 1:d) {
+    if (numbers_of_selections[i] &gt; 0) {
+      average_reward = sums_of_rewards[i] / numbers_of_selections[i]
+      delta_i = sqrt(3/2 * log(n) / numbers_of_selections[i])
+      upper_bound = average_reward + delta_i
+    } else {
+        upper_bound = 1e400
+    }
+    if (upper_bound &gt; max_upper_bound) {
+      max_upper_bound = upper_bound
+      ad = i
+    }
+  }
+  ads_selected = append(ads_selected, ad)
+  numbers_of_selections[ad] = numbers_of_selections[ad] + 1
+  reward = dataset[n, ad]
+  sums_of_rewards[ad] = sums_of_rewards[ad] + reward
+  total_reward = total_reward + reward
+}</code></pre>
+<div id="visualising-the-results" class="section level4">
+<h4>Visualising the results</h4>
+<pre class="r"><code>hist(ads_selected,
+     col = &#39;blue&#39;,
+     main = &#39;Histogram of ads selections&#39;,
+     xlab = &#39;Ads&#39;,
+     ylab = &#39;Number of times each ad was selected&#39;)</code></pre>
+</div>
+</div>
+</div>
+<div id="thompson-sampling" class="section level2">
+<h2>Thompson Sampling</h2>
+<div id="importing-the-dataset-1" class="section level3">
+<h3>Importing the dataset</h3>
+<pre class="r"><code>dataset = read.csv(&#39;Ads_CTR_Optimisation.csv&#39;)</code></pre>
+</div>
+<div id="implementing-thompson-sampling" class="section level3">
+<h3>Implementing Thompson Sampling</h3>
+<pre class="r"><code>N = 10000
+d = 10
+ads_selected = integer(0)
+numbers_of_rewards_1 = integer(d)
+numbers_of_rewards_0 = integer(d)
+total_reward = 0
+for (n in 1:N) {
+  ad = 0
+  max_random = 0
+  for (i in 1:d) {
+    random_beta = rbeta(n = 1,
+                        shape1 = numbers_of_rewards_1[i] + 1,
+                        shape2 = numbers_of_rewards_0[i] + 1)
+    if (random_beta &gt; max_random) {
+      max_random = random_beta
+      ad = i
+    }
+  }
+  ads_selected = append(ads_selected, ad)
+  reward = dataset[n, ad]
+  if (reward == 1) {
+    numbers_of_rewards_1[ad] = numbers_of_rewards_1[ad] + 1
+  } else {
+    numbers_of_rewards_0[ad] = numbers_of_rewards_0[ad] + 1
+  }
+  total_reward = total_reward + reward
+}</code></pre>
+</div>
+<div id="visualising-the-results-1" class="section level3">
+<h3>Visualising the results</h3>
+<pre class="r"><code>hist(ads_selected,
+     col = &#39;blue&#39;,
+     main = &#39;Histogram of ads selections&#39;,
+     xlab = &#39;Ads&#39;,
+     ylab = &#39;Number of times each ad was selected&#39;)</code></pre>
+</div>
+</div>
+</div>
+<div id="natural-language-processing" class="section level1">
+<h1>Natural Language Processing</h1>
+<div id="importing-the-dataset-2" class="section level2">
+<h2>Importing the dataset</h2>
+<pre class="r"><code>dataset_original = read.delim(&#39;Restaurant_Reviews.tsv&#39;, quote = &#39;&#39;, stringsAsFactors = FALSE)</code></pre>
+</div>
+<div id="cleaning-the-texts" class="section level2">
+<h2>Cleaning the texts</h2>
+<pre class="r"><code>library(tm)
+library(SnowballC)
+corpus = VCorpus(VectorSource(dataset_original$Review))
+corpus = tm_map(corpus, content_transformer(tolower))
+corpus = tm_map(corpus, removeNumbers)
+corpus = tm_map(corpus, removePunctuation)
+corpus = tm_map(corpus, removeWords, stopwords())
+corpus = tm_map(corpus, stemDocument)
+corpus = tm_map(corpus, stripWhitespace)</code></pre>
+</div>
+<div id="creating-the-bag-of-words-model" class="section level2">
+<h2>Creating the Bag of Words model</h2>
+<pre class="r"><code>dtm = DocumentTermMatrix(corpus)
+dtm = removeSparseTerms(dtm, 0.999)
+dataset = as.data.frame(as.matrix(dtm))
+dataset$Liked = dataset_original$Liked</code></pre>
+</div>
+<div id="importing-the-dataset-3" class="section level2">
+<h2>Importing the dataset</h2>
+<pre class="r"><code>dataset = read.csv(&#39;Social_Network_Ads.csv&#39;)
+dataset = dataset[3:5]</code></pre>
+</div>
+<div id="encoding-the-target-feature-as-factor" class="section level2">
+<h2>Encoding the target feature as factor</h2>
+<pre class="r"><code>dataset$Liked = factor(dataset$Liked, levels = c(0, 1))</code></pre>
+</div>
+<div id="splitting-the-dataset-into-the-training-set-and-test-set" class="section level2">
+<h2>Splitting the dataset into the Training set and Test set</h2>
+<pre class="r"><code>library(caTools)
+set.seed(123)
+split = sample.split(dataset$Liked, SplitRatio = 0.8)
+training_set = subset(dataset, split == TRUE)
+test_set = subset(dataset, split == FALSE)</code></pre>
+</div>
+<div id="fitting-random-forest-classification-to-the-training-set" class="section level2">
+<h2>Fitting Random Forest Classification to the Training set</h2>
+<pre class="r"><code>library(randomForest)
+classifier = randomForest(x = training_set[-692],
+                          y = training_set$Liked,
+                          ntree = 10)</code></pre>
+</div>
+<div id="predicting-the-test-set-results" class="section level2">
+<h2>Predicting the Test set results</h2>
+<pre class="r"><code>y_pred = predict(classifier, newdata = test_set[-692])</code></pre>
+</div>
+<div id="making-the-confusion-matrix" class="section level2">
+<h2>Making the Confusion Matrix</h2>
+<pre class="r"><code>cm = table(test_set[, 692], y_pred)</code></pre>
+</div>
+</div>
+<div id="deep-learning" class="section level1">
+<h1>Deep Learning</h1>
+<div id="artificial-neural-networks-ann" class="section level2">
+<h2>Artificial Neural Networks (ANN)</h2>
+<div id="importing-the-dataset-4" class="section level3">
+<h3>Importing the dataset</h3>
+<pre class="r"><code>dataset = read.csv(&#39;Churn_Modelling.csv&#39;)
+dataset = dataset[4:14]</code></pre>
+</div>
+<div id="encoding-the-categorical-variables-as-factors" class="section level3">
+<h3>Encoding the categorical variables as factors</h3>
+<pre class="r"><code>dataset$Geography = as.numeric(factor(dataset$Geography,
+                                      levels = c(&#39;France&#39;, &#39;Spain&#39;, &#39;Germany&#39;),
+                                      labels = c(1, 2, 3)))
+dataset$Gender = as.numeric(factor(dataset$Gender,
+                                   levels = c(&#39;Female&#39;, &#39;Male&#39;),
+                                   labels = c(1, 2)))</code></pre>
+</div>
+<div id="splitting-the-dataset-into-the-training-set-and-test-set-1" class="section level3">
+<h3>Splitting the dataset into the Training set and Test set</h3>
+<pre class="r"><code>library(caTools)
+set.seed(123)
+split = sample.split(dataset$Exited, SplitRatio = 0.8)
+training_set = subset(dataset, split == TRUE)
+test_set = subset(dataset, split == FALSE)</code></pre>
+</div>
+<div id="feature-scaling" class="section level3">
+<h3>Feature Scaling</h3>
+<pre class="r"><code>training_set[-11] = scale(training_set[-11])
+test_set[-11] = scale(test_set[-11])</code></pre>
+</div>
+<div id="fitting-ann-to-the-training-set" class="section level3">
+<h3>Fitting ANN to the Training set</h3>
+<pre class="r"><code>library(h2o)
+h2o.init(nthreads = -1)
+model = h2o.deeplearning(y = &#39;Exited&#39;,
+                         training_frame = as.h2o(training_set),
+                         activation = &#39;Rectifier&#39;,
+                         hidden = c(5,5),
+                         epochs = 100,
+                         train_samples_per_iteration = -2)</code></pre>
+</div>
+<div id="predicting-the-test-set-results-1" class="section level3">
+<h3>Predicting the Test set results</h3>
+<pre class="r"><code>y_pred = h2o.predict(model, newdata = as.h2o(test_set[-11]))
+y_pred = (y_pred &gt; 0.5)
+y_pred = as.vector(y_pred)</code></pre>
+<p>###Making the Confusion Matrix</p>
+<pre class="r"><code>cm = table(test_set[, 11], y_pred)
+h2o.shutdown()</code></pre>
+</div>
+</div>
+<div id="convolutional-neural-networks-cnn" class="section level2">
+<h2>Convolutional Neural Networks (CNN)</h2>
+<p>Pas de code sous R….</p>
+</div>
+</div>
+<div id="instrumental-variables-regression" class="section level1">
+<h1>Instrumental Variables Regression</h1>
+<p>Simple linear regression model (OLS) is based on the assumption that the independent variables are exogenous. That is, the error terms in the linear regression model are uncorrelated or independent of the explanatory variables.</p>
+<p>Explanatory variables that are not exogenous are called endogenous variables. Therefore, if, for whatever reason, an explanatory variable is correlated with the model error term then it is said to be an endogenous explanatory variable and we say the model suffers from endogeneity.</p>
+<p>All OLS estimators will be biased and inconsistent in the presence of endogenous regressors. Endogeneity can arise as a result of measurement error, reverse casualty/simultaneity, omitted variable or unobserved variables, omitted selection,lagged dependent variables.</p>
+<p>To solve endogeneity, we should eliminate measurement error, introduce omitted or unobserved variables for mending the correlated missing regressors, narrow the generality of interpretation for mending sample selection bias as it does no longer apply to the population, but rather to the chunk of the population satisfying sample restrictions, estimate a system of simultaneous equations etc. Often these solutions are not achievable in practice. Reverse Causality is also tougher to handle. Thus the solution is to use an alternative estimation method known as instrumental variables (IV) or equivalently two-stage least squares (2SLS). This involves introduction of a variable that induces changes in the explanatory variable but has no independent effect on the dependent variable, allowing one to uncover the causal effect of the explanatory variable on the dependent variable.</p>
+<p>We try to estimating the return to education for Married Women. T.A. Mroz (1987), The Sensitivity of an Empirical Model of Married Women’s Hours of Work to Economic and Statistical Assumptions, Econometrica 55, 765-799. Professor Ernst R. Berndt, of MIT, kindly provided the data, which he obtained from Professor Mroz.</p>
+<pre class="r"><code>library(wooldridge)
+library(stargazer)
+data(&quot;mroz&quot;)
+head(mroz)</code></pre>
+<div id="we-fit-the-basic-model" class="section level3">
+<h3>We fit the basic model</h3>
+<pre class="r"><code>educ_model &lt;- lm(lwage ~ educ, data = mroz)</code></pre>
+<p>We run the typical linear model, but notice the use of the subset argument. inlf is a binary variable in which a value of 1 means they are “In the Labor Force”. By sub-setting the mroz data.frame by observations in which inlf==1, only working women will be in the sample.</p>
+<pre class="r"><code>fatheduc_model &lt;- lm(educ ~ fatheduc, data = mroz, subset = (inlf==1))</code></pre>
+</div>
+<div id="instrumental-variable-regression" class="section level3">
+<h3>Instrumental Variable Regression</h3>
+<pre class="r"><code>library(&quot;AER&quot;)
+educ_IV_model &lt;- ivreg(lwage ~ educ | fatheduc, data = mroz)</code></pre>
+<p>We use coeftest() in conjunction with vcovHC() to obtain robust coefficient summaries for all models.</p>
+<pre class="r"><code>coeftest(educ_IV_model, vcov = vcovHC, type = &quot;HC1&quot;)</code></pre>
+</div>
+<div id="check-instrument-validity" class="section level3">
+<h3>Check Instrument Validity</h3>
+<p>Instruments that explain little variation in the endogenous regressor are called weak instruments. Weak instruments provide little information about the variation in explicative variable that is exploited by IV regression to estimate the effect of interest: the estimate of the coefficient on the endogenous regressor is estimated inaccurately. Moreover, weak instruments cause the distribution of the estimator to deviate considerably from a normal distribution even in large samples such that the usual methods for obtaining inference about the true coefficient on explicative variable may produce wrong results.</p>
+<p>We proceed by generating a tabulated summary of the estimation results. First we gather standard errors in a list :</p>
+<pre class="r"><code>rob_se &lt;- list(sqrt(diag(vcovHC(educ_model, type = &quot;HC1&quot;))),
+               sqrt(diag(vcovHC(educ_IV_model, type = &quot;HC1&quot;))))</code></pre>
+<p>Then we generate table with stargazer() :</p>
+<pre class="r"><code>library(stargazer)
+stargazer(educ_model, educ_IV_model,
+  type = &quot;text&quot;,
+  header = FALSE, 
+  omit.table.layout = &quot;n&quot;,
+  digits = 2, 
+  column.labels = c(&quot;Original model&quot;, &quot;IV: fathereduc&quot;),
+  dep.var.labels.include = FALSE,
+  dep.var.caption = &quot;Dependent Variable: Log salary&quot;,
+  se = rob_se)</code></pre>
+<p>Which one should we trust? This hinges on the validity of the instruments used. To assess this we compute<br />
+F -statistics for the first-stage regressions of our model to check instrument relevance.</p>
+<pre class="r"><code>mod_relevance1 &lt;- lm(lwage ~ educ + fatheduc, data=mroz)</code></pre>
+<p>and we check the linearHypothesis</p>
+<pre class="r"><code>linearHypothesis(mod_relevance1, 
+                 &quot;fatheduc = 0&quot;, 
+                 vcov = vcovHC, type = &quot;HC1&quot;)</code></pre>
+<p>Since this value is smaller than<br />
+0.05 we reject the hypothesis that both instruments are exogenous at the level of<br />
+5%.</p>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

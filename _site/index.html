@@ -9,7 +9,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Léo Quennesson" />
 
 
 <title>Presentation</title>
@@ -23,6 +22,10 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/clipboard-1.7.1/clipboard.min.js"></script>
+<link href="site_libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+<link href="site_libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+<script src="site_libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -276,16 +279,40 @@ $(document).ready(function () {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="project_1.html">TED</a>
+  <a href="Preprocessing.html">Preprocessing</a>
 </li>
 <li>
-  <a href="project_2.html">API LOL</a>
+  <a href="data_wrangling.html">Data Wrangling</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Algorithms
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="quantitative_analysis.html">Quantitative Analysis</a>
+    </li>
+    <li>
+      <a href="qualitative_analysis.html">Qualitative Analysis</a>
+    </li>
+    <li>
+      <a href="unsupervised_learning.html">Clustering</a>
+    </li>
+    <li>
+      <a href="dimensionality_reduction.html">Dimensionality Reduction</a>
+    </li>
+    <li>
+      <a href="selection_boosting.html">Model selection and Boosting</a>
+    </li>
+    <li>
+      <a href="association_rule.html">Association Rule Learning</a>
+    </li>
+  </ul>
 </li>
 <li>
-  <a href="data_cleaning.html">Data Cleaning</a>
-</li>
-<li>
-  <a href="course.html">Courses</a>
+  <a href="more_to_come.html">More to Come</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -317,13 +344,47 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Presentation</h1>
-<h4 class="author">Léo Quennesson</h4>
 
 </div>
 
 
+<script>
+  addClassKlippyTo("pre.r, pre.markdown");
+  addKlippy('right', 'top', 'auto', '1', 'Copy code', 'Copied!');
+</script>
 <p><img src="png/profil.jpg" style="width:25%; border:10px solid; margin-right: 20px" align="left"> Un poil idéaliste, je pense que le rôle de l’économiste est d’améliorer la société.</p>
 <p>C’est avec cette idée que je me suis orienté vers l’évaluation des politiques publiques après une formation quantitative à la Paris School of Economics. Stagiaire à la Direction de la Sécurité Sociale, puis à la Direction de la Législation Fiscale, je me suis familiarisé avec les problématiques et le fonctionnement de ces directions. Mon premier poste comme chargé d’étude sur la dépense publique (et notamment locale) à la Direction Générale du Trésor (SPP-FIPU3) s’inscrit dans cette continuité.</p>
+<p>Me reste à ajouter :</p>
+<ul>
+<li><p>Possibilité d’ajouter le code sous Python ; <a href="https://cran.r-project.org/web/packages/reticulate/vignettes/r_markdown.html" class="uri">https://cran.r-project.org/web/packages/reticulate/vignettes/r_markdown.html</a></p></li>
+<li><p>Woolridge : ok. Potentiellement en plus la méthode des variables instrumentales (chap 15)</p></li>
+<li><p>completer avec introduction to econometrics with r : <a href="https://www.econometrics-with-r.org/" class="uri">https://www.econometrics-with-r.org/</a> ; chapitre 13 sur les expérimentations et les quasi expérimentations</p></li>
+<li><p>Add Lasso and Ridge regression / classification : <a href="https://github.com/pmaji/data-science-toolkit/blob/master/classification/logit/logistic_regression.md" class="uri">https://github.com/pmaji/data-science-toolkit/blob/master/classification/logit/logistic_regression.md</a>. Faire un projet complet avec.Il y a également ISL qui fait une très beau sujet là dessus</p></li>
+<li><p>Comment choisir un model : <a href="https://towardsdatascience.com/which-machine-learning-model-to-use-db5fdf37f3dd" class="uri">https://towardsdatascience.com/which-machine-learning-model-to-use-db5fdf37f3dd</a></p></li>
+<li><p>Pour la catégorie business, jeter un coup d’oeil à TensorHouse : <a href="https://github.com/ikatsov/tensor-house" class="uri">https://github.com/ikatsov/tensor-house</a></p></li>
+<li><p>Costumer Segmentation en Python : <a href="https://www.kaggle.com/fabiendaniel/customer-segmentation" class="uri">https://www.kaggle.com/fabiendaniel/customer-segmentation</a></p></li>
+<li><p>Faire une jolie présentation graphique pour les classifications. Utiliser : <a href="https://www.htmlwidgets.org/showcase_rbokeh.html" class="uri">https://www.htmlwidgets.org/showcase_rbokeh.html</a></p></li>
+<li><p>regarder <a href="https://holtzy.github.io/Pimp-my-rmd/" class="uri">https://holtzy.github.io/Pimp-my-rmd/</a> pour une belle image défilante voir parallax</p></li>
+<li><p>Dans dimensionality reduction, continuer LDA et PCA et donner un exemple pour une regresssion ou un KNN</p></li>
+</ul>
+<pre><code>&lt;style&gt;
+div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
+&lt;/style&gt;
+&lt;div class = &quot;blue&quot;&gt;
+
+- This is my first conclusion
+- This is my second conclusion
+
+&lt;/div&gt;</code></pre>
+<p>You can find here pratical examples found in <em>Introductory Econometrics: A Modern Approach, 6e by Jeffrey M. Wooldridge</em> and <em>Applied Econometrics with R of Kleiber C, Zeileis A (2008)</em>.</p>
+<p><img src="png/woolridge.jpg" width=35% > <img src="png/AER.jpg" width=35% ></p>
+<p>If not already done, you need to load packages with the following commands before any library. For example, if you need a dataset in the wolldridge package, use the following commandes beforhand.</p>
+<pre class="r"><code>install.packages(&#39;wooldridge&#39;)
+library(wooldridge)</code></pre>
+<p>There are two main reasons that we may wish to estimate a function : prediction and inference. For each of the algorithms, we detail if it is more suitable in wich approach.</p>
+<p>In the case of prediction, the algorithm is often treated as a black box, in the sense that one is not typically concerned with its exact form, provided that it yields accurate predictions for the variable of interest.</p>
+<p>In the case of inference, want to understand the relationship between two variables, or more specifically, to understand how the variable of interest changes as a function of others. We can answer the following questions : which predictors are associated with the response, what is the relationship between the respond and each predictor, can the relationship between the variable of interest and each predictor be adequately summarized using a linear equation, or is the relationship more complicated ?</p>
+<p>Of the many methods that we examine, some are less flexible, or more restrictive, in the sense that they can produce just a relatively small range of shapes to estimate the algorithm. For example, linear regression is a relatively inflexible approach, because it can only generate linear functions.If we are mainly interested in inference, then restrictive models are much more interpretable.</p>
 
 
 

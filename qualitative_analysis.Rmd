@@ -1,0 +1,355 @@
+---
+title: "Qualitative analysis"
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r klippy, echo=FALSE, include=TRUE}
+klippy::klippy(position = c('top', 'right'))
+```
+
+
+Many microeconometric models belong to the domain of generalized linear models (GLMs): probit model, Poisson regression. R has a single fitting function glm() closely resembling lm(). Because of the built-in distributional assumption, hence use method of maximym likelihood (ML).
+
+We use the training dataset to get better boundary conditions that could be used to determine each target class. Once the boundary conditions are determined, the next task is to predict the target class. The whole process is known as classification.
+
+We use the dataset from the Halloween candy dataset, it can be loaded through the fivethirtyeight dataset. The candy-data.csv includes attributes for each candy along with its ranking.
+
+
+```{r, echo=TRUE}
+library(fivethirtyeight)
+candy <- candy_rankings
+```
+
+
+Thank to Walt Hickey for making the data available. We can display values with DataTables for the five first column.
+```{r, echo=TRUE}
+library(DT)
+datatable(candy[1:5], options = list(pageLength = 5))
+```
+
+We’ll be trying to predict if a candy is chocolaty or not based on all the other features in the dataset. A logistic regression is a great choice for this particular modeling task because the variable we’re trying to predict is either TRUE or FALSE. The logistic regression model will output a probability that we can use to make our decision. 
+
+In this data, the variable chocolat is already a bolean. If you need to recode this variable or any other, please run the following code.
+
+We also delete the first variable competitorname because the name explain perfectly if the candy is chocolate or not. 
+
+```{r,eval=FALSE}
+candy$chocolate = factor(candy$chocolate, levels = c(0, 1))
+```
+
+```{r,echo=TRUE}
+candy <- candy[-1]
+```
+
+# Splitting the dataset into the Training set and Test set
+
+```{r,echo=TRUE}
+library(caTools)
+set.seed(123)
+split = sample.split(candy$chocolate, SplitRatio = 0.75)
+training_set = subset(candy, split == TRUE)
+test_set = subset(candy, split == FALSE)
+```
+
+# Logistic Regression
+
+## Fitting Logistic Regression to the Training set
+
+```{r}
+classifier = glm(formula = chocolate ~ .,
+                 family = binomial,
+                 data = training_set)
+summary(classifier)
+```
+
+## Predicting the Test set and Training set results 
+
+
+```{r, echo=TRUE}
+prob_pred = predict(classifier, type = 'response', newdata = test_set)
+y_pred = ifelse(prob_pred > 0.5, 1, 0)
+```
+
+##  Making the Confusion Matrix
+```{r, echo=TRUE}
+cm = table(test_set$chocolate, y_pred >0.5)
+print(cm)
+```
+
+## Visualising the Training set results
+
+We decide first what variable we want on our x-axis. That’s the only variable we’ll enter as a whole range. (The range we set here will determine the range on the x-axis of the final plot, by the way.) We can take inspiration from : https://cran.r-project.org/web/packages/ggiraphExtra/vignettes/ggPredict.html. 
+
+
+# K-Nearest Neighborst (K-NN)
+
+## Fitting K-Nearest Neighborst (K-NN) to the Training set
+
+```{r, echo=TRUE}
+library(class)
+y_pred = knn(train = training_set,
+             test = test_set,
+             cl = training_set$chocolate,
+             k = 5,
+             prob = TRUE)
+```
+
+##  Making the Confusion Matrix
+
+```{r, echo=TRUE}
+cm = table(test_set$chocolate, y_pred)
+print(cm)
+```
+
+
+# Support Vector Machine (SVM)
+
+## Fitting Support Vector Machine (SVM) to the Training set
+
+```{r, echo=TRUE}
+library(e1071)
+classifier = svm(formula = chocolate ~ .,
+                 data = training_set,
+                 type = 'C-classification',
+                 kernel = 'linear')
+```
+
+## Predicting the Test set results
+```{r, echo=TRUE}
+y_pred = predict(classifier, newdata = test_set)
+```
+
+##  Making the Confusion Matrix
+
+```{r, echo=TRUE}
+cm = table(test_set$chocolate, y_pred)
+print(cm)
+```
+
+# Kernel SVM
+
+We do exactly the same as the SVM model, changing the kernel 
+
+```{r, echo=TRUE}
+library(e1071)
+classifier = svm(formula = chocolate ~ .,
+                 data = training_set,
+                 type = 'C-classification',
+                 kernel = 'radial')
+y_pred = predict(classifier, newdata = test_set)
+cm = table(test_set$chocolate, y_pred)
+print(cm)
+```
+
+
+# Naive Bayes
+
+## Fitting Naive Bayes to the Training set
+
+```{r, echo=TRUE}
+library(e1071)
+classifier = naiveBayes(x = training_set,
+                        y = training_set$chocolate)
+
+```
+
+## Predicting the Test set results
+```{r, echo=TRUE}
+y_pred = predict(classifier, newdata = test_set)
+```
+
+##  Making the Confusion Matrix
+
+```{r, echo=TRUE}
+cm = table(test_set$chocolate, y_pred)
+print(cm)
+```
+
+
+# Decision Tree Classification
+
+## Fitting Decision Tree Classifications to the Training set
+
+```{r, echo=TRUE}
+library(rpart)
+classifier = rpart(formula = chocolate ~ .,
+                   data = training_set)
+
+```
+
+## Predicting the Test set results
+```{r , echo=TRUE}
+y_pred = predict(classifier, newdata = test_set, type = 'vector')
+```
+
+##  Making the Confusion Matrix
+
+```{r, echo=TRUE}
+cm = table(test_set$chocolate, y_pred>0.5)
+print(cm)
+```
+
+## Plotting the tree
+```{r , echo=TRUE}
+plot(classifier)
+text(classifier)
+```
+
+# Random Forest Classification
+
+## Fitting Random Forest Classification to the Training set
+
+```{r , echo=TRUE, message=FALSE}
+library(randomForest)
+set.seed(123)
+classifier = randomForest(formula= chocolate~ . ,
+                          data=candy,
+                          ntree = 500)
+```
+
+## Predicting the Test set results
+```{r , echo=TRUE}
+y_pred = predict(classifier, newdata = test_set)
+```
+
+##  Making the Confusion Matrix
+
+```{r, echo=TRUE}
+cm = table(test_set$chocolate, y_pred>0.5)
+print(cm)
+```
+
+## Plotting the tree
+```{r, echo=TRUE}
+plot(classifier)
+```
+
+
+
+# Binary Dependent Variables : Probit and Logit model
+A standard normal distribution yields to a probit model whereas a logistic distribution yields to a logit model.
+
+We take the example of the Female labor force participation for 872 women from Switzerland (Gerfin, JAE 1996). 
+
+## Regression
+The dependent variable is participation and regressors are income, nonlabor income (in logs)
+education, years of formal education, age, age in decades, numbers of younger / older children
+foreign and factor indicating citizenship.
+
+```{r, echo=TRUE}
+data("SwissLabor", package = "AER")
+swiss_probit <- glm(participation ~ . + I(age^2),
+  data = SwissLabor, family = binomial(link = "probit"))
+summary(swiss_probit)
+```
+
+## Visualization
+Produces spine plot for resulting proportions of participation within age groups
+
+```{r, echo=TRUE}
+plot(participation ~ age, data = SwissLabor, ylevels = 2:1)
+```
+
+## Effect
+In linear models, the interpretation of model parameters is linear. The effects in probit model vary with regressors.
+
+You need additional step to display the average of sample marginal effect :
+
+```{r, echo=TRUE}
+fav <- mean(dnorm(predict(swiss_probit, type = "link")))
+fav * coef(swiss_probit)
+```
+
+## Goodness of fit and prediction
+
+We can display the confusion matrix 
+```{r, echo=TRUE}
+ table(true = SwissLabor$participation, pred = round(fitted(swiss_probit)))
+```
+
+Confusion matrix uses arbitrarily chosen cutoff 0.5 for predicted probabilities. To avoid choosing particular cutoff, we can use the package ROCR that evaluates performance for every conceivable cutoff; e.g., using accuracy of the model – proportion of correctly classified
+observations.
+
+```{r, echo=TRUE}
+library(ROCR)
+pred <- prediction(fitted(swiss_probit),
+  SwissLabor$participation)
+plot(performance(pred, "acc"))
+```
+Here we see that 0.5 seems to be OK. 
+
+The receiver operating characteristic (ROC) allows also to display true positive rate against false positive rate. 
+
+```{r, echo=TRUE}
+plot(performance(pred, "tpr", "fpr"))
+abline(0, 1, lty = 2)
+```
+
+# Regression Models for Count data : Poisson Models
+
+We use the RecreationDemand data that regress the number of recreational boating trips to Lake
+Somerville, TX, in 1980 on divers explicatives variables.
+
+```{r, echo=TRUE, message=FALSE}
+library(AER)
+data("RecreationDemand")
+rd_pois <- glm(trips ~ ., data = RecreationDemand,
+  family = poisson)
+summary(rd_pois)
+```
+
+## Dealing with overdispersion
+
+The Poisson model assumes equal mean and variance. If the variance is larger than the mean, we talk about overdispersion. Test goes as follow (Cameron and Trivedi 1990) : 
+
+```{r, echo=TRUE}
+dispersiontest(rd_pois)
+```
+
+If that doesn't hold, like here,then the Poisson model isn't correct. Quasi-poisson is one possibility when there is overdispersion.
+
+```{r, echo=TRUE}
+rd_qpois <- glm(trips ~ ., data = RecreationDemand,family = quasipoisson)
+```
+
+More flexible distribution is negative binomial with probability density function
+```{r, echo=TRUE}
+library("MASS")
+rd_nb <- glm.nb(trips ~ ., data = RecreationDemand)
+coeftest(rd_nb)
+```
+
+
+# Zero-Inflated Poisson and negative binomial models
+
+Typical problem with count data is that it have too many zeros : RecreationDemand example has 63.28% zeros and the Poisson regression provides only 41.96%.We can plot marginal distribution of response: 
+
+```{r, echo=TRUE}
+plot(table(RecreationDemand$trips),ylab="")
+```
+
+Zero-inflated Poisson (ZIP) model (Mullahy 1986, Lambert 1992) for recreational trips give the following : 
+```{r, echo=TRUE, message=FALSE}
+library("pscl")
+rd_zinb <- zeroinfl(trips ~ . | quality + income, data = RecreationDemand, dist = "negbin")
+summary(rd_zinb)
+```
+
+# Censored Dependent Variables : Tobit Models
+Censored regression models are a class of models in which the dependent variable is censored above or below a certain threshold. A commonly used likelihood-based model to accommodate to a censored sample is the Tobit model, but quantile and nonparametric estimators have also been developed. These and other censored regression models are often confused with truncated regression models. Truncated regression models are used for data where whole observations are missing so that the values for the dependent and the independent variables are unknown. Censored regression models are used for data where only the value for the dependent variable is unknown while the values of the independent variables are still available.
+
+We use the survival package (Therneau and Grambsch 2000) to fit censored regression model and the "Fair's affairs" (Fair, JPE 1978) dataset, a survey on extramarital affairs conducted by Psychology Today (1969) and dependent variable is affairs (number of extramarital affairs during past year), regressors are notably gender, age...
+
+```{r, echo=TRUE}
+data("Affairs")
+aff_tob <- tobit(affairs ~ age + yearsmarried +
+  religiousness + occupation + rating, data = Affairs)
+summary(aff_tob)
+```
+

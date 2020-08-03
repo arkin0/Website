@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Association Rule Learning</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/clipboard-1.7.1/clipboard.min.js"></script>
+<link href="site_libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+<link href="site_libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+<script src="site_libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 64px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h2 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h3 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h4 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h5 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h6 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Léo Quennesson</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="Preprocessing.html">Preprocessing</a>
+</li>
+<li>
+  <a href="data_wrangling.html">Data Wrangling</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Algorithms
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="quantitative_analysis.html">Quantitative Analysis</a>
+    </li>
+    <li>
+      <a href="qualitative_analysis.html">Qualitative Analysis</a>
+    </li>
+    <li>
+      <a href="unsupervised_learning.html">Clustering</a>
+    </li>
+    <li>
+      <a href="dimensionality_reduction.html">Dimensionality Reduction</a>
+    </li>
+    <li>
+      <a href="selection_boosting.html">Model selection and Boosting</a>
+    </li>
+    <li>
+      <a href="association_rule.html">Association Rule Learning</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="more_to_come.html">More to Come</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="contact.html">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/leoquennesson">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://www.linkedin.com/in/l%C3%A9o-quennesson-920658b7/">
+    <span class="fa fa-linkedin fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Association Rule Learning</h1>
+
+</div>
+
+
+<script>
+  addClassKlippyTo("pre.r, pre.markdown");
+  addKlippy('right', 'top', 'auto', '1', 'Copy code', 'Copied!');
+</script>
+<div id="association-rule-learning" class="section level1">
+<h1>Association Rule Learning</h1>
+<p>Association rule learning is a rule-based machine learning method for discovering interesting relations between variables in large databases. It is intended to identify strong rules discovered in databases using some measures of interestingness.</p>
+<p>We will use an inbuilt dataset “Groceries” from the ‘arules’ package to illyustrate our analysis.</p>
+<pre class="r"><code>library(arules)
+data(&quot;Groceries&quot;)
+summary(Groceries)</code></pre>
+<pre><code>## transactions as itemMatrix in sparse format with
+##  9835 rows (elements/itemsets/transactions) and
+##  169 columns (items) and a density of 0.02609146 
+## 
+## most frequent items:
+##       whole milk other vegetables       rolls/buns             soda 
+##             2513             1903             1809             1715 
+##           yogurt          (Other) 
+##             1372            34055 
+## 
+## element (itemset/transaction) length distribution:
+## sizes
+##    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15   16 
+## 2159 1643 1299 1005  855  645  545  438  350  246  182  117   78   77   55   46 
+##   17   18   19   20   21   22   23   24   26   27   28   29   32 
+##   29   14   14    9   11    4    6    1    1    1    1    3    1 
+## 
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   1.000   2.000   3.000   4.409   6.000  32.000 
+## 
+## includes extended item information - examples:
+##        labels  level2           level1
+## 1 frankfurter sausage meat and sausage
+## 2     sausage sausage meat and sausage
+## 3  liver loaf sausage meat and sausage</code></pre>
+<p>We can also quickly visualize what are the top 10 purchased items of this list.</p>
+<pre class="r"><code>itemFrequencyPlot(Groceries, topN = 10)</code></pre>
+<p><img src="association_rule_files/figure-html/unnamed-chunk-2-1.png" width="672" /> # Apriori</p>
+<div id="training-apriori-on-the-dataset" class="section level2">
+<h2>Training Apriori on the dataset</h2>
+<pre class="r"><code>rules = apriori(data = Groceries, parameter = list(support = 0.001, confidence = 0.80))</code></pre>
+<pre><code>## Apriori
+## 
+## Parameter specification:
+##  confidence minval smax arem  aval originalSupport maxtime support minlen
+##         0.8    0.1    1 none FALSE            TRUE       5   0.001      1
+##  maxlen target  ext
+##      10  rules TRUE
+## 
+## Algorithmic control:
+##  filter tree heap memopt load sort verbose
+##     0.1 TRUE TRUE  FALSE TRUE    2    TRUE
+## 
+## Absolute minimum support count: 9 
+## 
+## set item appearances ...[0 item(s)] done [0.00s].
+## set transactions ...[169 item(s), 9835 transaction(s)] done [0.00s].
+## sorting and recoding items ... [157 item(s)] done [0.00s].
+## creating transaction tree ... done [0.00s].
+## checking subsets of size 1 2 3 4 5 6 done [0.01s].
+## writing ... [410 rule(s)] done [0.00s].
+## creating S4 object  ... done [0.00s].</code></pre>
+</div>
+<div id="visualising-the-results" class="section level2">
+<h2>Visualising the results</h2>
+<pre class="r"><code>inspect(sort(rules, by = &#39;lift&#39;)[1:10])</code></pre>
+<pre><code>##      lhs                        rhs                   support confidence    coverage      lift count
+## [1]  {liquor,                                                                                       
+##       red/blush wine}        =&gt; {bottled beer}    0.001931876  0.9047619 0.002135231 11.235269    19
+## [2]  {citrus fruit,                                                                                 
+##       other vegetables,                                                                             
+##       soda,                                                                                         
+##       fruit/vegetable juice} =&gt; {root vegetables} 0.001016777  0.9090909 0.001118454  8.340400    10
+## [3]  {tropical fruit,                                                                               
+##       other vegetables,                                                                             
+##       whole milk,                                                                                   
+##       yogurt,                                                                                       
+##       oil}                   =&gt; {root vegetables} 0.001016777  0.9090909 0.001118454  8.340400    10
+## [4]  {citrus fruit,                                                                                 
+##       grapes,                                                                                       
+##       fruit/vegetable juice} =&gt; {tropical fruit}  0.001118454  0.8461538 0.001321810  8.063879    11
+## [5]  {other vegetables,                                                                             
+##       whole milk,                                                                                   
+##       yogurt,                                                                                       
+##       rice}                  =&gt; {root vegetables} 0.001321810  0.8666667 0.001525165  7.951182    13
+## [6]  {tropical fruit,                                                                               
+##       other vegetables,                                                                             
+##       whole milk,                                                                                   
+##       oil}                   =&gt; {root vegetables} 0.001321810  0.8666667 0.001525165  7.951182    13
+## [7]  {ham,                                                                                          
+##       pip fruit,                                                                                    
+##       other vegetables,                                                                             
+##       yogurt}                =&gt; {tropical fruit}  0.001016777  0.8333333 0.001220132  7.941699    10
+## [8]  {beef,                                                                                         
+##       citrus fruit,                                                                                 
+##       tropical fruit,                                                                               
+##       other vegetables}      =&gt; {root vegetables} 0.001016777  0.8333333 0.001220132  7.645367    10
+## [9]  {root vegetables,                                                                              
+##       butter,                                                                                       
+##       cream cheese }         =&gt; {yogurt}          0.001016777  0.9090909 0.001118454  6.516698    10
+## [10] {tropical fruit,                                                                               
+##       whole milk,                                                                                   
+##       butter,                                                                                       
+##       sliced cheese}         =&gt; {yogurt}          0.001016777  0.9090909 0.001118454  6.516698    10</code></pre>
+<p>The first rule shows that if we buy Liquor and Red Wine, we are very likely to buy bottled beer. We can rank the rules based on top 10 from either lift, support or confidence.</p>
+</div>
+<div id="graphical-representation" class="section level2">
+<h2>Graphical Representation</h2>
+<p>We can use a graph to highlight the support and lifts of various items in our repository but mostly to see which product is associated with which one in the sales environment.</p>
+<pre class="r"><code>library(arulesViz)
+plot(rules[1:20],
+method = &quot;graph&quot;,
+control = list(type = &quot;items&quot;))</code></pre>
+<pre><code>## Available control parameters (with default values):
+## main  =  Graph for 20 rules
+## nodeColors    =  c(&quot;#66CC6680&quot;, &quot;#9999CC80&quot;)
+## nodeCol   =  c(&quot;#EE0000FF&quot;, &quot;#EE0303FF&quot;, &quot;#EE0606FF&quot;, &quot;#EE0909FF&quot;, &quot;#EE0C0CFF&quot;, &quot;#EE0F0FFF&quot;, &quot;#EE1212FF&quot;, &quot;#EE1515FF&quot;, &quot;#EE1818FF&quot;, &quot;#EE1B1BFF&quot;, &quot;#EE1E1EFF&quot;, &quot;#EE2222FF&quot;, &quot;#EE2525FF&quot;, &quot;#EE2828FF&quot;, &quot;#EE2B2BFF&quot;, &quot;#EE2E2EFF&quot;, &quot;#EE3131FF&quot;, &quot;#EE3434FF&quot;, &quot;#EE3737FF&quot;, &quot;#EE3A3AFF&quot;, &quot;#EE3D3DFF&quot;, &quot;#EE4040FF&quot;, &quot;#EE4444FF&quot;, &quot;#EE4747FF&quot;, &quot;#EE4A4AFF&quot;, &quot;#EE4D4DFF&quot;, &quot;#EE5050FF&quot;, &quot;#EE5353FF&quot;, &quot;#EE5656FF&quot;, &quot;#EE5959FF&quot;, &quot;#EE5C5CFF&quot;, &quot;#EE5F5FFF&quot;, &quot;#EE6262FF&quot;, &quot;#EE6666FF&quot;, &quot;#EE6969FF&quot;, &quot;#EE6C6CFF&quot;, &quot;#EE6F6FFF&quot;, &quot;#EE7272FF&quot;, &quot;#EE7575FF&quot;,  &quot;#EE7878FF&quot;, &quot;#EE7B7BFF&quot;, &quot;#EE7E7EFF&quot;, &quot;#EE8181FF&quot;, &quot;#EE8484FF&quot;, &quot;#EE8888FF&quot;, &quot;#EE8B8BFF&quot;, &quot;#EE8E8EFF&quot;, &quot;#EE9191FF&quot;, &quot;#EE9494FF&quot;, &quot;#EE9797FF&quot;, &quot;#EE9999FF&quot;, &quot;#EE9B9BFF&quot;, &quot;#EE9D9DFF&quot;, &quot;#EE9F9FFF&quot;, &quot;#EEA0A0FF&quot;, &quot;#EEA2A2FF&quot;, &quot;#EEA4A4FF&quot;, &quot;#EEA5A5FF&quot;, &quot;#EEA7A7FF&quot;, &quot;#EEA9A9FF&quot;, &quot;#EEABABFF&quot;, &quot;#EEACACFF&quot;, &quot;#EEAEAEFF&quot;, &quot;#EEB0B0FF&quot;, &quot;#EEB1B1FF&quot;, &quot;#EEB3B3FF&quot;, &quot;#EEB5B5FF&quot;, &quot;#EEB7B7FF&quot;, &quot;#EEB8B8FF&quot;, &quot;#EEBABAFF&quot;, &quot;#EEBCBCFF&quot;, &quot;#EEBDBDFF&quot;, &quot;#EEBFBFFF&quot;, &quot;#EEC1C1FF&quot;, &quot;#EEC3C3FF&quot;, &quot;#EEC4C4FF&quot;, &quot;#EEC6C6FF&quot;, &quot;#EEC8C8FF&quot;,  &quot;#EEC9C9FF&quot;, &quot;#EECBCBFF&quot;, &quot;#EECDCDFF&quot;, &quot;#EECFCFFF&quot;, &quot;#EED0D0FF&quot;, &quot;#EED2D2FF&quot;, &quot;#EED4D4FF&quot;, &quot;#EED5D5FF&quot;, &quot;#EED7D7FF&quot;, &quot;#EED9D9FF&quot;, &quot;#EEDBDBFF&quot;, &quot;#EEDCDCFF&quot;, &quot;#EEDEDEFF&quot;, &quot;#EEE0E0FF&quot;, &quot;#EEE1E1FF&quot;, &quot;#EEE3E3FF&quot;, &quot;#EEE5E5FF&quot;, &quot;#EEE7E7FF&quot;, &quot;#EEE8E8FF&quot;, &quot;#EEEAEAFF&quot;, &quot;#EEECECFF&quot;, &quot;#EEEEEEFF&quot;)
+## edgeCol   =  c(&quot;#474747FF&quot;, &quot;#494949FF&quot;, &quot;#4B4B4BFF&quot;, &quot;#4D4D4DFF&quot;, &quot;#4F4F4FFF&quot;, &quot;#515151FF&quot;, &quot;#535353FF&quot;, &quot;#555555FF&quot;, &quot;#575757FF&quot;, &quot;#595959FF&quot;, &quot;#5B5B5BFF&quot;, &quot;#5E5E5EFF&quot;, &quot;#606060FF&quot;, &quot;#626262FF&quot;, &quot;#646464FF&quot;, &quot;#666666FF&quot;, &quot;#686868FF&quot;, &quot;#6A6A6AFF&quot;, &quot;#6C6C6CFF&quot;, &quot;#6E6E6EFF&quot;, &quot;#707070FF&quot;, &quot;#727272FF&quot;, &quot;#747474FF&quot;, &quot;#767676FF&quot;, &quot;#787878FF&quot;, &quot;#7A7A7AFF&quot;, &quot;#7C7C7CFF&quot;, &quot;#7E7E7EFF&quot;, &quot;#808080FF&quot;, &quot;#828282FF&quot;, &quot;#848484FF&quot;, &quot;#868686FF&quot;, &quot;#888888FF&quot;, &quot;#8A8A8AFF&quot;, &quot;#8C8C8CFF&quot;, &quot;#8D8D8DFF&quot;, &quot;#8F8F8FFF&quot;, &quot;#919191FF&quot;, &quot;#939393FF&quot;,  &quot;#959595FF&quot;, &quot;#979797FF&quot;, &quot;#999999FF&quot;, &quot;#9A9A9AFF&quot;, &quot;#9C9C9CFF&quot;, &quot;#9E9E9EFF&quot;, &quot;#A0A0A0FF&quot;, &quot;#A2A2A2FF&quot;, &quot;#A3A3A3FF&quot;, &quot;#A5A5A5FF&quot;, &quot;#A7A7A7FF&quot;, &quot;#A9A9A9FF&quot;, &quot;#AAAAAAFF&quot;, &quot;#ACACACFF&quot;, &quot;#AEAEAEFF&quot;, &quot;#AFAFAFFF&quot;, &quot;#B1B1B1FF&quot;, &quot;#B3B3B3FF&quot;, &quot;#B4B4B4FF&quot;, &quot;#B6B6B6FF&quot;, &quot;#B7B7B7FF&quot;, &quot;#B9B9B9FF&quot;, &quot;#BBBBBBFF&quot;, &quot;#BCBCBCFF&quot;, &quot;#BEBEBEFF&quot;, &quot;#BFBFBFFF&quot;, &quot;#C1C1C1FF&quot;, &quot;#C2C2C2FF&quot;, &quot;#C3C3C4FF&quot;, &quot;#C5C5C5FF&quot;, &quot;#C6C6C6FF&quot;, &quot;#C8C8C8FF&quot;, &quot;#C9C9C9FF&quot;, &quot;#CACACAFF&quot;, &quot;#CCCCCCFF&quot;, &quot;#CDCDCDFF&quot;, &quot;#CECECEFF&quot;, &quot;#CFCFCFFF&quot;, &quot;#D1D1D1FF&quot;,  &quot;#D2D2D2FF&quot;, &quot;#D3D3D3FF&quot;, &quot;#D4D4D4FF&quot;, &quot;#D5D5D5FF&quot;, &quot;#D6D6D6FF&quot;, &quot;#D7D7D7FF&quot;, &quot;#D8D8D8FF&quot;, &quot;#D9D9D9FF&quot;, &quot;#DADADAFF&quot;, &quot;#DBDBDBFF&quot;, &quot;#DCDCDCFF&quot;, &quot;#DDDDDDFF&quot;, &quot;#DEDEDEFF&quot;, &quot;#DEDEDEFF&quot;, &quot;#DFDFDFFF&quot;, &quot;#E0E0E0FF&quot;, &quot;#E0E0E0FF&quot;, &quot;#E1E1E1FF&quot;, &quot;#E1E1E1FF&quot;, &quot;#E2E2E2FF&quot;, &quot;#E2E2E2FF&quot;, &quot;#E2E2E2FF&quot;)
+## alpha     =  0.5
+## cex   =  1
+## itemLabels    =  TRUE
+## labelCol  =  #000000B3
+## measureLabels     =  FALSE
+## precision     =  3
+## layout    =  NULL
+## layoutParams  =  list()
+## arrowSize     =  0.5
+## engine    =  igraph
+## plot  =  TRUE
+## plot_options  =  list()
+## max   =  100
+## verbose   =  FALSE</code></pre>
+<p><img src="association_rule_files/figure-html/unnamed-chunk-5-1.png" width="672" /> # Eclat</p>
+</div>
+<div id="training-eclat-on-the-dataset" class="section level2">
+<h2>Training Eclat on the dataset</h2>
+<pre class="r"><code>rules = eclat(data = Groceries, parameter = list(support = 0.001, minlen = 2))</code></pre>
+<pre><code>## Eclat
+## 
+## parameter specification:
+##  tidLists support minlen maxlen            target  ext
+##     FALSE   0.001      2     10 frequent itemsets TRUE
+## 
+## algorithmic control:
+##  sparse sort verbose
+##       7   -2    TRUE
+## 
+## Absolute minimum support count: 9 
+## 
+## create itemset ... 
+## set transactions ...[169 item(s), 9835 transaction(s)] done [0.00s].
+## sorting and recoding items ... [157 item(s)] done [0.00s].
+## creating sparse bit matrix ... [157 row(s), 9835 column(s)] done [0.00s].
+## writing  ... [13335 set(s)] done [0.03s].
+## Creating S4 object  ... done [0.00s].</code></pre>
+</div>
+<div id="visualising-the-results-1" class="section level2">
+<h2>Visualising the results</h2>
+<pre class="r"><code>inspect(sort(rules, by = &#39;support&#39;)[1:10])</code></pre>
+<pre><code>##      items                              support    transIdenticalToItemsets
+## [1]  {other vegetables,whole milk}      0.07483477 736                     
+## [2]  {whole milk,rolls/buns}            0.05663447 557                     
+## [3]  {whole milk,yogurt}                0.05602440 551                     
+## [4]  {root vegetables,whole milk}       0.04890696 481                     
+## [5]  {root vegetables,other vegetables} 0.04738180 466                     
+## [6]  {other vegetables,yogurt}          0.04341637 427                     
+## [7]  {other vegetables,rolls/buns}      0.04260295 419                     
+## [8]  {tropical fruit,whole milk}        0.04229792 416                     
+## [9]  {whole milk,soda}                  0.04006101 394                     
+## [10] {rolls/buns,soda}                  0.03833249 377                     
+##      count
+## [1]  736  
+## [2]  557  
+## [3]  551  
+## [4]  481  
+## [5]  466  
+## [6]  427  
+## [7]  419  
+## [8]  416  
+## [9]  394  
+## [10] 377</code></pre>
+<p>The support of an itemset is how many times the itemset appears in the transaction database. For example, the itemset {other vegetables,whole milk} has a support of 736 because.</p>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

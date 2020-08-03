@@ -2,14 +2,28 @@ name: "Léo Quennesson"
 navbar:
   title: "Léo Quennesson"
   left:
-    - text: "TED"
-      href: project_1.html
-    - text: "API LOL"
-      href: project_2.html
-    - text: "Data Prepocessing"
-      href: data_cleaning.html
-    - text: "Courses"
+    - text: "Preprocessing"
+      href: Preprocessing.html
+    - text: "Data Wrangling" 
+      href: data_wrangling.html
+    - text: "Algorithms"
       href: course.html
+      menu : 
+      - text: "Quantitative Analysis"
+        href: quantitative_analysis.html    
+      - text: "Qualitative Analysis"
+        href: qualitative_analysis.html
+      - text: "Clustering"
+        href:  unsupervised_learning.html
+      - text: "Dimensionality Reduction"
+        href:  dimensionality_reduction.html
+      - text: "Model selection and Boosting"
+        href:  selection_boosting.html   
+      - text: "Association Rule Learning"
+        href:  association_rule.html 
+    - text: "More to Come"
+      href: more_to_come.html 
+        
   right:
     - icon: fa-envelope fa-lg
       href: contact.html
